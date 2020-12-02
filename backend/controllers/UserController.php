@@ -70,7 +70,12 @@ class UserController extends Controller{
                 $user_model->password = $password;
                 $user = $user_model->getLogin();
                 if ($user){
-                    $_SESSION['user'] = $username;
+                    if (isset($_POST['remember'])){
+                        setcookie('username',$username,time()+7200);
+                        // dùng mã hóa md5 để mã hóa password khi lưu cookie
+                        setcookie('password',md5($password),time()+7200);
+                    }
+                    $_SESSION['user'] = $user;
                     $_SESSION['success'] = 'Đăng nhập thành công';
                     header("Location: index.php?controller=category&action=index");
                     exit();
@@ -79,10 +84,15 @@ class UserController extends Controller{
                 }
             }
         }
+        if (isset($_COOKIE['username'])&&isset($_COOKIE['password'])){
+            $_SESSION['user'] = $_COOKIE['username'];
+            header('Location: index.php');
+            exit();
+        }
         $this->content = $this->render('views/users/login.php');
         require_once 'views/layouts/main_login.php';
     }
-    public function profile()
+    public function update()
     {
         if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
             header("Location: index.php?controller=user");
@@ -138,7 +148,7 @@ class UserController extends Controller{
                     $user_model->email = $email;
                     $user_model->avatar = $filename;
                     $user_model->updated_at = date('Y-m-d H:i:s');
-                    $is_update = $user_model->getProfile($id);
+                    $is_update = $user_model->getUpdate($id);
                     if ($is_update) {
                         $_SESSION['success'] = 'Cập nhật thành công';
                         header("Location: index.php?controller=user&action=index");
@@ -149,7 +159,7 @@ class UserController extends Controller{
                 }
             }
         }
-        $this->content = $this->render('views/users/profile.php');
+        $this->content = $this->render('views/users/update.php');
         require_once 'views/layouts/main.php';
     }
     public function delete() {
@@ -185,8 +195,28 @@ class UserController extends Controller{
 
         require_once 'views/layouts/main.php';
     }
+    public function profile(){
+        if (!isset($_SESSION['user']['id']) || !is_numeric($_SESSION['user']['id'])) {
+            header("Location: index.php?controller=user");
+            exit();
+        }
+        $id = $_SESSION['user']['id'];
+        $user_model = new User();
+        $user = $user_model->getById($id);
+
+        $this->content = $this->render('views/users/profile.php', [
+            'user' => $user
+        ]);
+
+        require_once 'views/layouts/main.php';
+    }
+    public function update_profile(){
+        echo 'Hello';
+    }
     public function logout(){
         unset($_SESSION['user']);
+        setcookie('username','username',time()-1);
+        setcookie('password','password',time()-1);
         $_SESSION['success'] = 'Logout thành công';
         header("Location: index.php?controller=user&action=login");
         exit();

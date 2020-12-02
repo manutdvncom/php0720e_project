@@ -1,14 +1,18 @@
 <?php
-//$year = '';
-//$username = '';
-//$jobs = '';
-//$avatar = '';
-//if (isset($_SESSION['user'])) {
-//    $username = $_SESSION['user']['username'];
-//    $jobs = $_SESSION['user']['jobs'];
-//    $avatar = $_SESSION['user']['avatar'];
-//    $year = date('Y', strtotime($_SESSION['user']['created_at']));
-//}
+$year = '';
+$username = '';
+$jobs = '';
+$avatar = '';
+if (!isset($_SESSION['user'])) {
+    $_SESSION['error'] = 'Bạn chưa đăng nhập';
+    header('Location: index.php?controller=user&action=login');
+    exit();
+} else {
+    $username = $_SESSION['user']['username'];
+    $jobs = $_SESSION['user']['jobs'];
+    $avatar = $_SESSION['user']['avatar'];
+    $year = date('Y', strtotime($_SESSION['user']['created_at']));
+}
 echo "<pre>";
 print_r($_SESSION['user']);
 echo "</pre>";
@@ -57,14 +61,21 @@ echo "</pre>";
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="assets/uploads/<?php echo $avatar; ?>" class="user-image" alt="User Image">
+                            <?php if (!empty($avatar)):?>
+                            <img src="assets/uploads/<?php echo $avatar; ?>" class="img-circle" width="50" alt="User Image">
+                            <?php else: ?>
+                            <img src="assets/uploads/user.png" width="30" class="img-circle" alt="User Image">
+                            <?php endif;?>
                             <span class="hidden-xs"></span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
+                                <?php if (!empty($avatar)):?>
                                 <img src="assets/uploads/<?php echo $avatar; ?>" class="img-circle" alt="User Image">
-
+                                <?php else: ?>
+                                    <img src="assets/uploads/user.png" width="50" class="img-circle" alt="User Image">
+                                <?php endif;?>
                                 <p>
                                     <?php echo $username . ' - ' . $jobs; ?>
                                     <!--Nguyễn Viết Mạnh - Web Developer-->
@@ -74,10 +85,10 @@ echo "</pre>";
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="index.php?controller=user&action=profile" class="btn btn-default btn-flat">Profile</a>
+                                    <a href="index.php?controller=user&action=profile" class="btn btn-default btn-flat">Hồ sơ</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="index.php?controller=user&action=logout" class="btn btn-default btn-flat">Sign out</a>
+                                    <a href="index.php?controller=user&action=logout" class="btn btn-default btn-flat">Đăng xuất</a>
                                 </div>
                             </li>
                         </ul>
@@ -91,15 +102,20 @@ echo "</pre>";
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
             <!-- Sidebar user panel -->
-            <div class="user-panel">
+            <div class="user-panel" style="overflow: inherit ">
                 <div class="pull-left image">
+                    <?php if (!empty($avatar)):?>
                     <img src="assets/uploads/<?php echo $avatar; ?>" class="img-circle" alt="User Image">
+                    <?php else: ?>
+                    <img src="assets/uploads/user.png" width="50" class="img-circle" alt="User Image">
+                    <?php endif;?>
                 </div>
-                <div class="pull-left info">
+                <div class="pull-right info" >
                     <p><?php echo $username; ?></p>
-                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                    <a href="#"><i class="fa fa-circle text-success"></i>Online</a>
                 </div>
             </div>
+            <br>
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header">LAOYOUT ADMIN</li>

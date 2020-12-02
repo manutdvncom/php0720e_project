@@ -2,7 +2,7 @@
 //views/users/register.php
 ?>
 <div class="container">
-    <h1>Form đăng ký</h1>
+    <h1>Đăng Ký</h1>
     <form action="" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="username">Tên đăng nhập</label>
@@ -17,7 +17,7 @@
             <label for="confirm-password">Nhập lại mật khẩu</label>
             <input type="password" id="confirm-password" name="confirm_password" class="form-control">
         </div>
-        <input type="submit" name="submit" value="Register" class="btn btn-primary">
-        <p>Đã có tài khoản, <a href="index.php?controller=user&action=login">Login</a></p>
+        <input type="submit" name="submit" value="Đăng ký" class="btn btn-primary">
+        <p>Đã có tài khoản, <a href="index.php?controller=user&action=login">Đăng nhập</a></p>
     </form>
 </div>

@@ -41,12 +41,6 @@ class User extends Model{
         $obj_insert = $sql_insert->execute([
             ':username' => $this->username,
             ':password' => $this->password,
-            ':first_name' => $this->first_name,
-            ':last_name' => $this->last_name,
-            ':phone' => $this->phone,
-            ':address' => $this->address,
-            ':email' => $this->email,
-            ':avatar' => $this->avatar
         ]);
         return $obj_insert;
     }
@@ -60,7 +54,7 @@ class User extends Model{
         $user = $sql_select->fetch(PDO::FETCH_ASSOC);
         return $user;
     }
-    public function getProfile($id){
+    public function getUpdate($id){
         $sql_update = $this->conn->prepare("update users set first_name=:first_name,last_name=:last_name,phone=:phone,email=:email,
                                            address=:address,avatar=:avatar,updated_at=:updated_at where id = $id");
         $obj_update = $sql_update->execute([

@@ -1,45 +1,64 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vu son
- * Date: 25/11/2020
- * Time: 13:11
- */
+require_once 'helpers/Helper.php';
 ?>
-<div class="container">
-    <h1>Hồ sơ cá nhân</h1>
-    <form action="" method="post" enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="fname">Họ</label>
-            <input type="text" name="fname" id="fname" class="form-control"
-                   value="<?php echo isset($_POST['fname']) ? $_POST['fname'] : ''?>">
-        </div>
-        <div class="form-group">
-            <label for="lname">Tên</label>
-            <input type="text" name="lname" id="lname" class="form-control"
-                   value="<?php echo isset($_POST['lname']) ? $_POST['lname'] : ''?>">
-        </div>
-        <div class="form-group">
-            <label for="phone">Số điện thoại</label>
-            <input type="number" name="phone" id="phone" class="form-control"
-                   value="<?php echo isset($_POST['phone']) ? $_POST['phone'] : ''?>">
-        </div>
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email" class="form-control"
-                   value="<?php echo isset($_POST['email']) ? $_POST['email'] : ''?>">
-        </div>
-        <div class="form-group">
-            <label for="address">Địa chỉ</label>
-            <input type="text" name="address" id="address" class="form-control"
-                   value="<?php echo isset($_POST['adđress']) ? $_POST['adđress'] : ''?>">
-        </div>
-        <div class="form-group">
-            <label for="avatar">Ảnh đại diện</label>
-            <input type="file" name="avatar" id="avatar" class="form-control"
-                   width="80px">
-        </div>
-        <input type="submit" name="submit" value="Cập nhật" class="btn btn-primary">
-        <a href="index.php?controller=user&action=index" class="btn btn-primary">Quay lại</a>
-    </form>
-</div>
+<h2>Chi tiết user</h2>
+<table class="table table-bordered">
+    <tr>
+        <th>ID</th>
+        <td><?php echo $user['id'] ?></td>
+    </tr>
+    <tr>
+        <th>username</th>
+        <td><?php echo $user['username'] ?></td>
+    </tr>
+    <tr>
+        <th>first_name</th>
+        <td><?php echo $user['first_name'] ?></td>
+    </tr>
+    <tr>
+        <th>last_name</th>
+        <td><?php echo $user['last_name'] ?></td>
+    </tr>
+    <tr>
+        <th>phone</th>
+        <td><?php echo $user['phone'] ?></td>
+    </tr>
+    <tr>
+        <th>address</th>
+        <td><?php echo $user['address'] ?></td>
+    </tr>
+    <tr>
+        <th>email</th>
+        <td><?php echo $user['email'] ?></td>
+    </tr>
+    <tr>
+        <th>avatar</th>
+        <td>
+            <?php if (!empty($user['avatar'])): ?>
+                <img height="80" src="assets/uploads/<?php echo $user['avatar'] ?>"/>
+            <?php endif; ?>
+        </td>
+    </tr>
+    <tr>
+        <th>jobs</th>
+        <td><?php echo $user['jobs'] ?></td>
+    </tr>
+    <tr>
+        <th>last_login</th>
+        <td><?php echo !empty($user['last_login']) ? date('d-m-Y H:i:s', strtotime($user['last_login'])) : '' ?></td>
+    </tr>
+    <tr>
+        <th>status</th>
+        <td><?php echo Helper::getStatusText($user['status']); ?></td>
+    </tr>
+    <tr>
+        <th>created_at</th>
+        <td><?php echo date('d-m-Y H:i:s', strtotime($user['created_at'])) ?></td>
+    </tr>
+    <tr>
+        <th>updated_at</th>
+        <td><?php echo date('d-m-Y H:i:s', strtotime($user['updated_at'])) ?></td>
+    </tr>
+</table>
+<a href="index.php?controller=user&action=update_profile" class="btn btn-primary">Cập nhật</a>
+<a href="index.php?controller=user&action=index" class="btn btn-primary">Back</a>

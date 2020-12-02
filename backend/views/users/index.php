@@ -47,7 +47,7 @@
                    title="Chi tiết">
                     <i class="fa fa-eye"></i>
                 </a>
-                <a href="index.php?controller=user&action=profile&id=<?php echo $v['id'] ?>" title="Sửa">
+                <a href="index.php?controller=user&action=update&id=<?php echo $v['id'] ?>" title="Sửa">
                     <i class="fa fa-pencil-alt"></i>
                 </a>
                 <a href="index.php?controller=user&action=delete&id=<?php echo $v['id'] ?>" title="Xóa"
