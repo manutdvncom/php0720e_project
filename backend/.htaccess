@@ -1,7 +1,6 @@
 #mvc_demo/.htaccess
 #File rewrite url
-RewriteEngine On;
-RewriteBase /
-RewriteRule "index.html" "index.php"
-RewriteRule "danh-sach-danh-muc.html" "index.php?controller=category&action=index"
+RewriteEngine On
+RewriteRule ^index.html?$ index.php
+RewriteRule danh-sach-danh-muc.html index.php?controller=category&action=index
 

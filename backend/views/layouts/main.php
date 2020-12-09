@@ -13,9 +13,9 @@ if (!isset($_SESSION['user'])) {
     $avatar = $_SESSION['user']['avatar'];
     $year = date('Y', strtotime($_SESSION['user']['created_at']));
 }
-echo "<pre>";
-print_r($_SESSION['user']);
-echo "</pre>";
+//echo "<pre>";
+//print_r($_SESSION['user']);
+//echo "</pre>";
 ?>
 <!DOCTYPE html>
 <html>

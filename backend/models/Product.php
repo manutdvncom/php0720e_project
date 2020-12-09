@@ -21,12 +21,55 @@ class Product extends Model{
     public $status;
     public $created_at;
     public $updated_at;
+    public $str_search;
+
+    public function __construct()
+    {
+        parent::__construct();
+        if (isset($_GET['title']) && !empty($_GET['title'])) {
+            $this->str_search .= " AND products.title LIKE '%{$_GET['title']}%'";
+        }
+        if (isset($_GET['category_id']) && !empty($_GET['category_id'])) {
+            $this->str_search .= " AND products.category_id = {$_GET['category_id']}";
+        }
+    }
     public function getAll(){
         $sql_select_all = $this->conn->prepare("Select products.*, categories.name from products, categories 
-                                                where products.category_id = categories.id order by created_at desc");
+                                                where products.category_id = categories.id where true $this->str_search order by created_at desc");
         $sql_select_all->execute();
         $obj = $sql_select_all->fetchAll(PDO::FETCH_ASSOC);
         return $obj;
+    }
+    public function getAllPagination($arr_params)
+    {
+        $limit = $arr_params['limit'];
+        $page = $arr_params['page'];
+        $start = ($page - 1) * $limit;
+        $obj_select = $this->conn
+            ->prepare("SELECT products.*, categories.name AS category_name FROM products 
+                        INNER JOIN categories ON categories.id = products.category_id
+                        WHERE TRUE $this->str_search
+                        ORDER BY products.updated_at DESC, products.created_at DESC
+                        LIMIT $start, $limit
+                        ");
+
+        $arr_select = [];
+        $obj_select->execute($arr_select);
+        $products = $obj_select->fetchAll(PDO::FETCH_ASSOC);
+
+        return $products;
+    }
+
+    /**
+     * Tính tổng số bản ghi đang có trong bảng products
+     * @return mixed
+     */
+    public function countTotal()
+    {
+        $obj_select = $this->conn->prepare("SELECT COUNT(id) FROM products WHERE TRUE $this->str_search");
+        $obj_select->execute();
+
+        return $obj_select->fetchColumn();
     }
     public function getCreate(){
         $sql_insert = $this->conn->prepare("insert into products(category_id,title,avatar,price,amount,summary,content,status,seo_title,seo_description,seo_keywords)

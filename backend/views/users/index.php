@@ -1,3 +1,16 @@
+<form method="GET" action="">
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username"
+               value="<?php echo isset($_GET['username']) ? $_GET['username'] : '' ?>" class="form-control"/>
+        <input type="hidden" name="controller" value="user"/>
+        <input type="hidden" name="action" value="index"/>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Tìm kiếm" name="search" class="btn btn-primary"/>
+        <a href="index.php?controller=user" class="btn btn-default">Back</a>
+    </div>
+</form>
 <div>
     <h1>Quản lý user</h1>
     <form action="" method="post" enctype="multipart/form-data"></form>
@@ -17,8 +30,8 @@
             <th>Ngày cập nhật cuối</th>
             <th></th>
         </tr>
-        <?php if (!empty($user)): ?>
-        <?php foreach ($user as $v): ?>
+        <?php if (!empty($users)): ?>
+        <?php foreach ($users as $v): ?>
         <tr>
             <td><?php echo $v['id']?></td>
             <td><?php echo $v['username']?></td>
@@ -59,4 +72,5 @@
         <?php endforeach;?>
         <?php endif; ?>
     </table>
+    <?php echo $pages; ?>
 </div>

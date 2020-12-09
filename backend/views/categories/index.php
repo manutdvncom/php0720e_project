@@ -5,6 +5,19 @@
 
 ?>
 <div>
+    <form action="" method="get">
+        <input type="hidden" name="controller" value="category"/>
+        <input type="hidden" name="action" value="index"/>
+        <div class="form-group">
+            <label>Nhập tên danh mục</label>
+            <input type="text" name="name" value="<?php echo isset($_GET['name']) ? $_GET['name'] : '' ?>"
+                   class="form-control"/>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Tìm kiếm" name="search" class="btn btn-primary"/>
+            <a href="index.php?controller=category" class="btn btn-secondary">Xóa filter</a>
+        </div>
+    </form>
     <h1>Danh sách danh mục các loại sản phẩm</h1>
     <a href="index.php?controller=category&action=create" class="btn btn-primary"><i class="fa fa-plus"></i> Thêm Mới</a>
     <form action="" method="post" enctype="multipart/form-data">
@@ -20,49 +33,54 @@
                 <th>Chức năng</th>
             </tr>
             <?php if (!empty($categories)): ?>
-            <?php foreach ($categories as $v): ?>
-            <tr>
-                <td><?php echo $v['id']?></td>
-                <td><?php echo $v['name']; ?></td>
-                <td>
-                    <?php if (!empty($v['avatar'])): ?>
-                        <img src="assets/uploads/<?php echo $v['avatar'] ?>" width="100"/>
-                    <?php endif; ?>
-                </td>
-                <td><?php echo $v['description']; ?></td>
-                <td>
-                    <?php
-                    $status_text = 'Active';
-                    if ($v['status'] == 0) {
-                        $status_text = 'Disabled';
-                    }
-                    echo $status_text;
-                    ?>
-                </td>
-                <td><?php echo date('d-m-Y H:i:s', strtotime($v['created_at'])); ?></td>
-                <td>
-                    <?php
-                    if (!empty($v['updated_at'])) {
-                        echo date('d-m-Y H:i:s', strtotime($v['updated_at']));
-                    }
-                    ?>
-                </td>
-                <td>
-                    <a href="index.php?controller=category&action=detail&id=<?php echo $v['id'] ?>"
-                       title="Chi tiết">
-                        <i class="fa fa-eye"></i>
-                    </a>
-                    <a href="index.php?controller=category&action=update&id=<?php echo $v['id'] ?>" title="Sửa">
-                        <i class="fa fa-pencil-alt"></i>
-                    </a>
-                    <a href="index.php?controller=category&action=delete&id=<?php echo $v['id'] ?>" title="Xóa"
-                       onclick="return confirm('Bạn có chắc chắn muốn xóa bản ghi này')">
-                        <i class="fa fa-trash"></i>
-                    </a>
-                </td>
-            </tr>
-            <?php endforeach;?>
+                <?php foreach ($categories as $v): ?>
+                <tr>
+                    <td><?php echo $v['id']?></td>
+                    <td><?php echo $v['name']; ?></td>
+                    <td>
+                        <?php if (!empty($v['avatar'])): ?>
+                            <img src="assets/uploads/<?php echo $v['avatar'] ?>" width="100"/>
+                        <?php endif; ?>
+                    </td>
+                    <td><?php echo $v['description']; ?></td>
+                    <td>
+                        <?php
+                        $status_text = 'Active';
+                        if ($v['status'] == 0) {
+                            $status_text = 'Disabled';
+                        }
+                        echo $status_text;
+                        ?>
+                    </td>
+                    <td><?php echo date('d-m-Y H:i:s', strtotime($v['created_at'])); ?></td>
+                    <td>
+                        <?php
+                        if (!empty($v['updated_at'])) {
+                            echo date('d-m-Y H:i:s', strtotime($v['updated_at']));
+                        }
+                        ?>
+                    </td>
+                    <td>
+                        <a href="index.php?controller=category&action=detail&id=<?php echo $v['id'] ?>"
+                           title="Chi tiết">
+                            <i class="fa fa-eye"></i>
+                        </a>
+                        <a href="index.php?controller=category&action=update&id=<?php echo $v['id'] ?>" title="Sửa">
+                            <i class="fa fa-pencil-alt"></i>
+                        </a>
+                        <a href="index.php?controller=category&action=delete&id=<?php echo $v['id'] ?>" title="Xóa"
+                           onclick="return confirm('Bạn có chắc chắn muốn xóa bản ghi này')">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                <?php endforeach;?>
+                <?php else: ?>
+                <tr>
+                    <td colspan="7">Không có bản ghi nào</td>
+                </tr>
             <?php endif;?>
         </table>
+        <?php echo $pages; ?>
     </form>
 </div>

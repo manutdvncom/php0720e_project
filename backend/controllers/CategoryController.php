@@ -1,14 +1,36 @@
 <?php
 require_once 'controllers/Controller.php';
 require_once 'models/Category.php';
+require_once 'models/Pagination.php';
 class CategoryController extends Controller
 {
     public function index()
     {
         $category_model = new Category();
-        $cate = $category_model->getAll();
+        $page = isset($_GET['page']) ? $_GET['page'] : 1;
+        $total = $category_model->countTotal();
+        $query_additional = '';
+        if (isset($_GET['name'])) {
+            $query_additional .= "&name=" . $_GET['name'];
+        }
+        $params = [
+            'total' => $total,
+            'limit' => 5, //giới hạn 5 bản ghi 1 trang
+            'query_string' => 'page',
+            'controller' => 'category',
+            'action' => 'index',
+            'full_mode' => FALSE,
+            'page' => $page,
+            'query_additional' => $query_additional
+        ];
+        $pagination = new Pagination($params);
+        //lấy ra html phân trang
+        $pages = $pagination->getPagination();
+        $cate = $category_model->getAllPagination($params);
+        $this->page_title = 'Danh sách danh mục sản phẩm';
         $this->content = $this->render('views/categories/index.php', [
-            'categories' => $cate
+            'categories' => $cate,
+            'pages' => $pages
         ]);
         require_once 'views/layouts/main.php';
     }
@@ -29,8 +51,8 @@ class CategoryController extends Controller
                 $size_mb = round($avatar['size'] / (1024 * 1024), 2);
                 if (!in_array($extension, $extension_allowed)) {
                     $this->error = 'Phải upload đúng định dạng ảnh';
-                } elseif ($size_mb > 3) {
-                    $this->error = 'Dung lượng ảnh không được lớn hơn 3mb';
+                } elseif ($size_mb > 5) {
+                    $this->error = 'Dung lượng ảnh không được lớn hơn 5mb';
                 }
             }
             $ava = '';
@@ -59,7 +81,7 @@ class CategoryController extends Controller
             }
         }
         //Set giá trị cho thuộc tính title
-        $this->page_title = 'Trang thêm mới danh mục';
+        $this->page_title = 'Thêm mới danh mục';
         //Lấy nội dung view tương ứng
         $this->content = $this->render('views/categories/create.php');
         //Gọi layout để hiển thị nội dung view vừa lấy được
@@ -95,8 +117,8 @@ class CategoryController extends Controller
 
                 if (!in_array($extension, $extension_arr)) {
                     $this->error = 'Cần upload file định dạng ảnh';
-                } else if ($file_size_mb >= 2) {
-                    $this->error = 'File upload không được lớn hơn 2Mb';
+                } else if ($file_size_mb >= 5) {
+                    $this->error = 'File upload không được lớn hơn 5Mb';
                 }
             }
 
@@ -106,16 +128,13 @@ class CategoryController extends Controller
                 //xử lý upload ảnh nếu có
                 if ($avatar['error'] == 0) {
                     //xóa file ảnh cũ đi
-
                     $dir_uploads = 'assets/uploads';
+                    @unlink($dir_uploads . '/' . $ava);
                     if (!file_exists($dir_uploads)) {
                         mkdir($dir_uploads);
                     }
-                    //xóa file ảnh cũ đi
-                    @unlink($dir_uploads . '/' . $ava);
                     //tạo tên file mới và save
                     $ava = time() . '-' . $avatar['name'];
-
                     move_uploaded_file($avatar['tmp_name'], $dir_uploads . '/' . $ava);
                 }
                 //lưu vào csdl
@@ -123,7 +142,7 @@ class CategoryController extends Controller
                 $category_model = new Category();
                 //gán các giá trị từ form cho các thuộc tính của categories
                 $category_model->name = $name;
-                $category_model->avatar = $avatar;
+                $category_model->avatar = $ava;
                 $category_model->description = $description;
                 $category_model->status = $status;
                 $category_model->updated_at = date('Y-m-d H:i:s');
@@ -138,6 +157,7 @@ class CategoryController extends Controller
                 exit();
             }
         }
+        $this->page_title = 'Cập nhật danh mục';
         $this->content = $this->render('views/categories/update.php',[
             'category' => $cate
         ]);
@@ -171,6 +191,7 @@ class CategoryController extends Controller
         $id = $_GET['id'];
         $category_model = new Category();
         $category = $category_model->getCategoryId($id);
+        $this->page_title = 'Chi tiết danh mục';
         //lấy nội dung view create.php
         $this->content = $this->render('views/categories/detail.php', [
             'category' => $category

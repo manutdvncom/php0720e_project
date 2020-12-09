@@ -1,7 +1,34 @@
 <?php
 require_once 'helpers/Helper.php';
 ?>
-
+<form action="" method="GET">
+    <div class="form-group">
+        <label for="title">Nhập title</label>
+        <input type="text" name="title" value="<?php echo isset($_GET['title']) ? $_GET['title'] : '' ?>" id="title"
+               class="form-control"/>
+    </div>
+    <div class="form-group">
+        <label for="title">Chọn danh mục</label>
+        <select name="category_id" class="form-control">
+            <?php foreach ($categories as $category):
+                //giữ trạng thái selected của category sau khi chọn dựa vào
+//                tham số category_id trên trình duyệt
+                $selected = '';
+                if (isset($_GET['category_id']) && $category['id'] == $_GET['category_id']) {
+                    $selected = 'selected';
+                }
+                ?>
+                <option value="<?php echo $category['id'] ?>" <?php echo $selected; ?>>
+                    <?php echo $category['name'] ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+    <input type="hidden" name="controller" value="product"/>
+    <input type="hidden" name="action" value="index"/>
+    <input type="submit" name="search" value="Tìm kiếm" class="btn btn-primary"/>
+    <a href="index.php?controller=product" class="btn btn-default">Xóa filter</a>
+</form>
 <h2>Danh sách sản phẩm</h2>
 <a href="index.php?controller=product&action=create" class="btn btn-primary">
     <i class="fa fa-plus"></i> Thêm mới
@@ -23,7 +50,7 @@ require_once 'helpers/Helper.php';
         <?php foreach ($products as $product): ?>
             <tr>
                 <td><?php echo $product['id'] ?></td>
-                <td><?php echo $product['name'] ?></td>
+                <td><?php echo $product['category_name'] ?></td>
                 <td><?php echo $product['title'] ?></td>
                 <td>
                     <?php if (!empty($product['avatar'])): ?>
@@ -51,7 +78,8 @@ require_once 'helpers/Helper.php';
 
     <?php else: ?>
         <tr>
-            <td colspan="9">No data found</td>
+            <td colspan="10" height="100">No data found</td>
         </tr>
     <?php endif; ?>
 </table>
+<?php echo $pages; ?>

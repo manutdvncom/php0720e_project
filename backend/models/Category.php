@@ -2,9 +2,17 @@
 require_once 'models/Model.php';
 class Category extends Model {
     public $id,$name,$type,$avatar,$description,$status,$updated_at;
+    public $str_search;
+    public function __construct() {
+        parent::__construct();
+        if (isset($_GET['name']) && !empty($_GET['name'])) {
+            $name = addslashes($_GET['name']);
+            $this->str_search .= " AND categories.name LIKE '%$name%'";
+        }
+    }
     public function getAll(){
-        $sql_select_all = $this->conn->prepare("select id,name,description,avatar,status,created_at,updated_at
-                                                        from categories order by created_at desc");
+
+        $sql_select_all = $this->conn->prepare("select * from categories order by created_at desc ");
         $sql_select_all->execute();
         $categories = $sql_select_all->fetchAll(PDO::FETCH_ASSOC);
         return $categories;
@@ -52,6 +60,26 @@ class Category extends Model {
         $sql_delete_product->execute();
 
         return $is_delete;
+    }
+    public function countTotal()
+    {
+        $obj_select = $this->conn->prepare("SELECT COUNT(id) FROM categories where true $this->str_search");
+        $obj_select->execute();
+
+        return $obj_select->fetchColumn();
+    }
+
+    public function getAllPagination($params = [])
+    {
+        $limit = $params['limit'];
+        $page = $params['page'];
+        $start = ($page - 1) * $limit;
+        $obj_select = $this->conn
+            ->prepare("SELECT * FROM categories where true $this->str_search LIMIT $start, $limit");
+        $obj_select->execute();
+        $categories = $obj_select->fetchAll(PDO::FETCH_ASSOC);
+
+        return $categories;
     }
 }
 ?>
