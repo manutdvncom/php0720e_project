@@ -4,7 +4,9 @@
 	box-sizing: border-box;
 }
 body {
-	font-family: 'Poppins', sans-serif;
+	font-family:  sans-serif;
+	overflow-x: hidden;
+	
 }
 .container{
 	max-width: 1300px;
@@ -66,7 +68,7 @@ p{
 .col-2 h1{
 	font-size: 50px;
 	line-height: 60px;
-	margin: 25px 0;
+	margin-top: 25px ;
 }
 .btn{
 	display: inline-block;
@@ -100,7 +102,12 @@ p{
 	cursor: pointer;
 }
 .categories{
-	margin: 70px 0;
+	margin: 70px 0 0 0;
+}
+.title__Categories{
+	text-align: center;
+	margin-bottom: 70px;
+	color: #555;
 }
 .col-3{
 	flex-basis: 30%;
@@ -122,6 +129,7 @@ p{
 	min-width: 200px;
 	margin-bottom: 50px;
 	transition: transform 0.5s;
+	cursor: pointer;
 }
 .col-4 img{
 	width: 100%;
@@ -147,6 +155,7 @@ p{
 h4{
 	color: #555;
 	font-weight: normal;
+	white-space: nowrap;
 }
 .col-4 p{
 	font-size: 14px;
@@ -221,10 +230,12 @@ small{
 	background: #000;
 	color: #8a8a8a;
 	font-size: 14px;
-	padding: 60px 0 20px;
+	padding: 60px 0 65px 0;
 }
 .footer p{
 	color: #8a8a8a;
+	margin-top: 20px;
+    font-size: 16px;
 }
 .footer h3{
 	color: #fff;
@@ -233,6 +244,7 @@ small{
 .footer-col-1, .footer-col-2,.footer-col-3,.footer-col-4{
 	min-width: 250px;
 	margin-bottom: 20px;
+	
 }
 .footer-col-1{
 	flex-basis: 30%;
@@ -252,6 +264,19 @@ small{
 ul{
 	list-style: none;
 }
+ul.call li{
+	padding: 5px;
+	text-align: left;
+}
+.footer--info{
+	display: flex;
+	justify-content: space-evenly;
+}
+.guide li{
+	text-align: left;
+	padding: 5px;
+	cursor: pointer;
+}.guide li:hover{color: #ff523b;}
 .app-logo{
 	margin-top: 20px;
 }
@@ -275,10 +300,14 @@ ul{
 .copyright{
 	text-align: center;
 }
+
 .menu-icon{
 	width: 28px;
 	margin-left: 20px;
 	display: none;
+}
+.cart-icon{
+	cursor: pointer;
 }
 .row-2{
 	justify-content: space-between;
@@ -303,6 +332,7 @@ select:focus{
 	text-align: center;
 	line-height: 40px;
 	cursor: pointer;
+	
 }
 .page-btn span:hover{
 	background: #ff523b;
@@ -367,7 +397,7 @@ td{
 	padding: 10px 5px;
 }
 td input{
-	width: 40px;
+	width: 115px;
 	height: 30px;
 	padding: 5px;
 }
@@ -386,9 +416,9 @@ td img{
 	justify-content: flex-end;
 }
 .total-price table{
-	border-top: 3px solid #ff523b;
+	border-top: 3px solid #000;
 	width: 100%;
-	max-width: 350px;
+	max-width: 280px;
 }
 td:last-child{
 	text-align: right;
@@ -397,7 +427,7 @@ th:last-child{
 	text-align: right;
 }
 .account-page{
-	padding: 50px 0;
+	padding: 0;
 	background: radial-gradient(#fff,#4a4945);
 }
 .form-container{
@@ -466,6 +496,29 @@ form .btn:focus{
 	filter: alpha(opacity=0);
 	overflow: hidden;
 }
+a.viewMore{
+	text-decoration: none;
+	border: 1px solid #ff523b;
+	padding: 7px 27px;
+	font-weight: 600;
+	margin-bottom: 40px;
+}
+.area_order{
+	width: 100%;
+	max-width: 350px;
+}
+h3.categories_Name{
+	text-align: center;
+	margin: 10px;
+}
+.col-3:hover h3.categories_Name{
+	color: #ff523b;
+}
+.sort_group{
+	justify-content: space-between;
+	margin-bottom: 25px;
+}
+
 @media only screen and (max-width: 800px) {
 	.menu{
 		margin-right: 20px;
@@ -495,6 +548,7 @@ form .btn:focus{
 		top: 30px;
 		right: 8px;
 		margin-right: 20px;
+
 	}
 }
 @media only screen and (max-width: 600px) {

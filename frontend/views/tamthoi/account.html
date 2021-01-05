@@ -7,27 +7,31 @@
     <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../assets/css/all.min.css">
+   <style>
+       
+        .container__Wrap{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container__Wrap span{
+            font-size: 21px;
+            text-transform: capitalize;
+        }
+   </style>
 </head>
 <body>
-<div class="container">
-    <div class="navbar">
-        <div class="logo">
-            <h1><a href="#" ><span>BIG</span>FAMILY</a></h1>
-        </div>
-        <div class="menu">
-            <ul id="menuitems">
-                <li><a href="" title="">Home</a></li>
-                <li><a href="" title="">Products</a></li>
-                <li><a href="" title="">About</a></li>
-                <li><a href="" title="">Contact</a></li>
-                <li><a href="" title="">Account</a></li>
-            </ul>
-            <img src="../assets/images/cart.png" width="30px" height="30px">
-            <img src="../assets/images/menu.png" class="menu-icon" onclick="menutoggle()">
-        </div>
-    </div>
-</div>
 <div class="account-page">
+    <div class="container">
+       <div class="container__Wrap">
+        <span>đăng nhập và khám phá cùng</span>
+        <div class="navbar">
+            <div class="logo">
+                <h1><a href="#" ><span>BIG</span>FAMILY</a></h1>
+            </div>
+        </div>
+       </div>
+    </div>
     <div class="container">
         <div class="row">
             <div class="col-2">
@@ -60,25 +64,33 @@
 <div class="footer">
     <div class="container">
         <div class="row">
-            <div class="footer-col-1">
-                <h3>Download Our App</h3>
-                <p>Download App for Android and IOS mobile phone</p>
-                <div class="app-logo">
-                    <img src="../assets/images/play-store.png">
-                    <img src="../assets/images/app-store.png">
-                </div>
-            </div>
-            <div class="footer-col-2">
-                <h1><span>BIG</span>FAMILY</h1>
-                <p>Our Purpose Is To Sustainably Make the Pleasure and Benefits of Sports Accessible to the Many.</p>
-            </div>
             <div class="footer-col-3">
-                <h3>Useful Links</h3>
-                <ul>
-                    <li>Coupons</li>
-                    <li>Blog Post</li>
-                    <li>Return Policy</li>
-                    <li>Join Affiliate</li>
+                <img src="../assets/images/logo-footer.PNG">
+                <p>Đồng Hành Với Mọi Gia Đình</p>
+            </div>
+            <div class="footer-col-2 footer--info">
+                <ul class="call col-1">
+                    <li>
+                        <span>Gọi mua hàng</span> 
+                        <span>1800.1060 (7:30 - 22:00)</span>
+                    </li>
+                    <li>
+                        <span>Gọi khiếu nại</span>
+                        <span>1800.1062 (8:00 - 21:30)</span></li>
+                    <li>
+                        <span>Gọi bảo hành</span>
+                        <span>1800.1064 (8:00 - 21:00)</span>
+                    </li>
+                    <li>
+                        <span>Kỹ thuật</span> 
+                        <span>1800.1763 (7:30 - 22:00)</span>
+                    </li>
+                </ul>
+                <ul class="col-1 guide">
+                    <li>Tuyển dụng</li>
+                    <li>Gửi góp ý, khiếu nại</li>
+                    <li>Tìm siêu thị</li>
+                    <li>Hướng dẫn mua online</li>
                 </ul>
             </div>
             <div class="footer-col-4">
@@ -92,20 +104,10 @@
             </div>
         </div>
         <hr>
-        <p class="copyright">Copyright 2020 - Easy Tutorials</p>
+        <p class="copyright"> ©Copyright 2020 Công ty cổ phần BigFamily .Địa chỉ tại: số 1 Hoàng Đạo Thúy - Thanh Xuân - Hà Nội. Email: cskh@bigfamily.com</p>
     </div>
 </div>
-<script>
-    var menuitems = document.getElementById("menuitems");
-    menuitems.style.maxHeight = "0px";
-    function menutoggle() {
-        if (menuitems.style.maxHeight=="0px"){
-            menuitems.style.maxHeight = "200px";
-        } else {
-            menuitems.style.maxHeight = "0px";
-        }
-    }
-</script>
+
 <script>
     var loginForm = document.getElementById("loginForm");
     var regForm = document.getElementById("regForm");
