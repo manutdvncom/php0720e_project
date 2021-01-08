@@ -44,7 +44,7 @@ class ProductController extends Controller {
         $product_model = new Product();
         $categories = $product_model->getAllCategory();
         $products = $product_model->getCategoryId($id);
-        $this->content = $this->render("views/products.php",[
+        $this->content = $this->render("views/product_categories.php",[
             'products' => $products,
             'categories' => $categories
         ]);

@@ -1,6 +1,6 @@
 <?php
 //echo "<pre>";
-//print_r($cate);
+//print_r($products);
 //echo "</pre>";
 require_once "helpers/Helper.php";
 ?>
