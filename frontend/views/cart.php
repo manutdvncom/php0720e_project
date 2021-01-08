@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cart</title>
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/all.min.css">
 </head>
 <body>
 <div class="container">
@@ -22,8 +22,8 @@
                 <li><a href="" title="">Contact</a></li>
                 <li><a href="" title="">Account</a></li>
             </ul>
-            <img src="../images/cart.png" width="30px" height="30px">
-            <img src="../images/menu.png" class="menu-icon" onclick="menutoggle()">
+            <img src="../assets/images/cart.png" width="30px" height="30px">
+            <img src="../assets/images/menu.png" class="menu-icon" onclick="menutoggle()">
         </div>
         <a href="" onclick="topFunction()" id="top-btn" class="btn">&#x021D1</a>
     </div>
@@ -38,7 +38,7 @@
         <tr>
             <td>
                 <div class="cart-info">
-                    <img src="../images/buy-1.jpg">
+                    <img src="../assets/images/buy-1.jpg">
                     <div>
                         <p>Red T-Shirt</p>
                         <small>Price: $50.00</small>
@@ -53,7 +53,7 @@
         <tr>
             <td>
                 <div class="cart-info">
-                    <img src="../images/buy-2.jpg">
+                    <img src="../assets/images/buy-2.jpg">
                     <div>
                         <p>Red T-Shirt</p>
                         <small>Price: $50.00</small>
@@ -68,7 +68,7 @@
         <tr>
             <td>
                 <div class="cart-info">
-                    <img src="../images/buy-3.jpg">
+                    <img src="../assets/images/buy-3.jpg">
                     <div>
                         <p>Red T-Shirt</p>
                         <small>Price: $50.00</small>
@@ -105,8 +105,8 @@
                 <h3>Download Our App</h3>
                 <p>Download App for Android and IOS mobile phone</p>
                 <div class="app-logo">
-                    <img src="../images/play-store.png">
-                    <img src="../images/app-store.png">
+                    <img src="../assets/images/play-store.png">
+                    <img src="../assets/images/app-store.png">
                 </div>
             </div>
             <div class="footer-col-2">

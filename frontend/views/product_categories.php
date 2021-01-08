@@ -32,6 +32,10 @@ require_once "helpers/Helper.php";
                     <p>$<?php echo $product['price']?></p>
                 </div>
             <?php endforeach; ?>
+        <?php elseif (empty($products)):?>
+            <div>
+                <p>Không tìm thấy dữ liệu</p>
+            </div>
         <?php endif;?>
     </div>
     <div class="page-btn">

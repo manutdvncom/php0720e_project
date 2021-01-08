@@ -4,13 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BigFamily</title>
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="../css/lightslider.min.css">
-    <script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script>
-    <script type="text/javascript" src="../js/lightslider.min.js"></script>
-
+    <link rel="stylesheet" type="text/css" href="assets/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/lightslider.min.css">
+    <script type="text/javascript" src="assets/js/script.js"></script>
+    <script type="text/javascript" src="assets/js/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/lightslider.min.js"></script>
 </head>
 <body>
     <div class="header">
@@ -21,14 +21,14 @@
                 </div>
                 <div class="menu">
                     <ul id="menuitems">
-                        <li><a href="" title="">Home</a></li>
-                        <li><a href="" title="">Products</a></li>
-                        <li><a href="" title="">About</a></li>
-                        <li><a href="" title="">Contact</a></li>
-                        <li><a href="" title="">Account</a></li>
+                        <li><a href="index.php?controller=home" title="Trang chủ">Home</a></li>
+                        <li><a href="index.php?controller=product&action=index" title="Sản phẩm">Products</a></li>
+                        <li><a href="" title="Về chúng tôi">About</a></li>
+                        <li><a href="" title="Liên hệ">Contact</a></li>
+                        <li><a href="index.php?controller=customer&action=account" title="Tài khoản">Account</a></li>
                     </ul>
-                    <img src="../images/cart.png" width="30px" height="30px">
-                    <img src="../images/menu.png" class="menu-icon" onclick="menutoggle()">
+                    <img src="assets/images/cart.png" width="30px" height="30px">
+                    <img src="assets/images/menu.png" class="menu-icon" onclick="menutoggle()">
                 </div>
             </div>
             <div class="row">
@@ -39,7 +39,7 @@
                     <a href="#" class="btn">Explore Now &#8594</a>
                 </div>
                 <div class="col-2">
-                    <img src="../images/image1.png" >
+                    <img src="assets/images/image1.png" >
                 </div>
             </div>
             <a href="" onclick="topFunction()" id="top-btn" class="btn">&#x021D1</a>
@@ -48,9 +48,9 @@
     <div class="categories">
         <div class="small-container">
             <div class="row">
-                <div class="col-3"><img src="../images/category-1.jpg"></div>
-                <div class="col-3"><img src="../images/category-2.jpg"></div>
-                <div class="col-3"><img src="../images/category-3.jpg"></div>
+                <div class="col-3"><img src="assets/images/category-1.jpg"></div>
+                <div class="col-3"><img src="assets/images/category-2.jpg"></div>
+                <div class="col-3"><img src="assets/images/category-3.jpg"></div>
             </div>
         </div>
     </div>
@@ -58,7 +58,7 @@
         <h2 class="title">Featured Products</h2>
         <div class="row">
             <div class="col-4">
-                <img src="../images/product-1.jpg">
+                <img src="assets/images/product-1.jpg">
                 <h4>Red Printed T-Shirt</h4>
                 <div class="rating">
                     <i class="fa fa-star"></i>
@@ -66,7 +66,7 @@
                 <p>$50.00</p>
             </div>
             <div class="col-4">
-                <img src="../images/product-2.jpg">
+                <img src="assets/images/product-2.jpg">
                 <h4>Red Printed T-Shirt</h4>
                 <div class="rating">
                     <i class="fa fa-star"></i>
@@ -74,7 +74,7 @@
                 <p>$50.00</p>
             </div>
             <div class="col-4">
-                <img src="../images/product-3.jpg">
+                <img src="assets/images/product-3.jpg">
                 <h4>Red Printed T-Shirt</h4>
                 <div class="rating">
                     <i class="fa fa-star"></i>
@@ -82,7 +82,7 @@
                 <p>$50.00</p>
             </div>
             <div class="col-4">
-                <img src="../images/product-4.jpg">
+                <img src="assets/images/product-4.jpg">
                 <h4>Red Printed T-Shirt</h4>
                 <div class="rating">
                     <i class="fa fa-star"></i>
@@ -93,7 +93,7 @@
         <h2 class="title">Latest Products</h2>
         <div class="row">
             <div class="col-4">
-                <img src="../images/product-5.jpg">
+                <img src="assets/images/product-5.jpg">
                 <h4>Red Printed T-Shirt</h4>
                 <div class="rating">
                     <i class="fa fa-star"></i>
@@ -101,7 +101,7 @@
                 <p>$50.00</p>
             </div>
             <div class="col-4">
-                <img src="../images/product-6.jpg">
+                <img src="assets/images/product-6.jpg">
                 <h4>Red Printed T-Shirt</h4>
                 <div class="rating">
                     <i class="fa fa-star"></i>
@@ -109,7 +109,7 @@
                 <p>$50.00</p>
             </div>
             <div class="col-4">
-                <img src="../images/product-7.jpg">
+                <img src="assets/images/product-7.jpg">
                 <h4>Red Printed T-Shirt</h4>
                 <div class="rating">
                     <i class="fa fa-star"></i>
@@ -117,7 +117,7 @@
                 <p>$50.00</p>
             </div>
             <div class="col-4">
-                <img src="../images/product-8.jpg">
+                <img src="assets/images/product-8.jpg">
                 <h4>Red Printed T-Shirt</h4>
                 <div class="rating">
                     <i class="fa fa-star"></i>
@@ -132,7 +132,7 @@
                 <div class="small-container">
                     <div class="row">
                         <div class="col-2">
-                            <img src="../images/exclusive.png" class="offer-img">
+                            <img src="assets/images/exclusive.png" class="offer-img">
                         </div>
                         <div class="col-2">
                             <p>Exclusively Available on RedStore</p>
@@ -149,7 +149,7 @@
                 <div class="small-container">
                     <div class="row">
                         <div class="col-2">
-                            <img src="../images/banner_01.png" class="offer-img" width="72%">
+                            <img src="assets/images/banner_01.png" class="offer-img" width="72%">
                         </div>
                         <div class="col-2">
                             <p>Exclusively Available on RedStore</p>
@@ -166,7 +166,7 @@
                 <div class="small-container">
                     <div class="row">
                         <div class="col-2">
-                            <img src="../images/banner_02.png" class="offer-img" width="72%">
+                            <img src="assets/images/banner_02.png" class="offer-img" width="72%">
                         </div>
                         <div class="col-2">
                             <p>Exclusively Available on RedStore</p>
@@ -195,7 +195,7 @@
                         <i class="fa fa-star"></i>
                         <i class="far fa-star"></i>
                     </div>
-                    <img src="../images/user-1.png">
+                    <img src="assets/images/user-1.png">
                     <h3>Nguyen Dac Dai</h3>
                 </div>
                 <div class="col-3">
@@ -209,7 +209,7 @@
                         <i class="fa fa-star"></i>
                         <i class="far fa-star"></i>
                     </div>
-                    <img src="../images/user-2.png">
+                    <img src="assets/images/user-2.png">
                     <h3>Vu Hoang Son</h3>
                 </div>
                 <div class="col-3">
@@ -223,7 +223,7 @@
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star-half"></i>
                     </div>
-                    <img src="../images/user-3.png">
+                    <img src="assets/images/user-3.png">
                     <h3>Nguyen Xuan Phuong</h3>
                 </div>
             </div>
@@ -232,11 +232,11 @@
     <div class="brands">
         <div class="small-container">
             <div class="row">
-                <div class="col-5"><img src="../images/logo-godrej.png"></div>
-                <div class="col-5"><img src="../images/logo-coca-cola.png"></div>
-                <div class="col-5"><img src="../images/logo-oppo.png"></div>
-                <div class="col-5"><img src="../images/logo-paypal.png"></div>
-                <div class="col-5"><img src="../images/logo-philips.png"></div>
+                <div class="col-5"><img src="assets/images/logo-godrej.png"></div>
+                <div class="col-5"><img src="assets/images/logo-coca-cola.png"></div>
+                <div class="col-5"><img src="assets/images/logo-oppo.png"></div>
+                <div class="col-5"><img src="assets/images/logo-paypal.png"></div>
+                <div class="col-5"><img src="assets/images/logo-philips.png"></div>
             </div>
         </div>
     </div>
@@ -247,12 +247,12 @@
                     <h3>Download Our App</h3>
                     <p>Download App for Android and IOS mobile phone</p>
                     <div class="app-logo">
-                        <img src="../images/play-store.png">
-                        <img src="../images/app-store.png">
+                        <img src="assets/images/play-store.png">
+                        <img src="assets/images/app-store.png">
                     </div>
                 </div>
                 <div class="footer-col-2">
-                    <img src="../images/logo-footer.PNG">
+                    <img src="assets/images/logo-footer.PNG">
                     <p>Our Purpose Is To Sustainably Make the Pleasure and Benefits of Sports Accessible to the Many.</p>
                 </div>
                 <div class="footer-col-3">
@@ -278,48 +278,21 @@
             <p class="copyright">Copyright 2020 - Easy Tutorials</p>
         </div>
     </div>
-    <script>
-        var menuitems = document.getElementById("menuitems");
-        menuitems.style.maxHeight = "0px";
-        function menutoggle() {
-            if (menuitems.style.maxHeight=="0px"){
-                menuitems.style.maxHeight = "200px";
-            } else {
-                menuitems.style.maxHeight = "0px";
+<script>
+    $(document).ready(function() {
+        var autoplaySlider = $('#autoplay').lightSlider({
+            adaptiveHeight:true,
+            item:1,
+            slideMargin:0,
+            auto:true,
+            loop:true,
+            pauseOnHover: true,
+            onBeforeSlide: function (el) {
+                $('#current').text(el.getCurrentSlideCount());
             }
-        }
-        var mybutton = document.getElementById("top-btn");
-
-        // When the user scrolls down 20px from the top of the document, show the button
-        window.onscroll = function() {scrollFunction()};
-
-        function scrollFunction() {
-            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                mybutton.style.display = "block";
-            } else {
-                mybutton.style.display = "none";
-            }
-        }
-
-        // When the user clicks on the button, scroll to the top of the document
-        function topFunction() {
-            document.body.scrollTop = 0;
-            document.documentElement.scrollTop = 0;
-        }
-        $(document).ready(function() {
-            var autoplaySlider = $('#autoplay').lightSlider({
-                adaptiveHeight:true,
-                item:1,
-                slideMargin:0,
-                auto:true,
-                loop:true,
-                pauseOnHover: true,
-                onBeforeSlide: function (el) {
-                    $('#current').text(el.getCurrentSlideCount());
-                }
-            });
-            $('#total').text(autoplaySlider.getTotalSlideCount());
         });
-    </script>
+        $('#total').text(autoplaySlider.getTotalSlideCount());
+    });
+</script>
 </body>
 </html>
