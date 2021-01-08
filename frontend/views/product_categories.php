@@ -1,13 +1,23 @@
 <?php
 //echo "<pre>";
-//print_r($products);
+//print_r($categories);
 //echo "</pre>";
 require_once "helpers/Helper.php";
 ?>
 <body>
 <div class="small-container">
     <div class="row row-2">
-        <h2>All products</h2>
+        <?php foreach ($categories as $category):
+        //giữ trạng thái selected của category sau khi chọn dựa vào
+        //                tham số category_id trên trình duyệt
+        $selected = '';
+        if (isset($_GET['categoryid']) && $category['id'] == $_GET['categoryid']) {
+            $selected = $category['name'];
+        }
+        ?>
+            <h2 style="position: absolute"><?php echo $selected ?></h2>
+        <?php endforeach; ?>
+        <div style="clear: both"></div>
         <select>
             <option>Default Shorting</option>
             <option>Short by price</option>

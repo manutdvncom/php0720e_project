@@ -22,7 +22,15 @@
                 <div class="menu">
                     <ul id="menuitems">
                         <li><a href="index.php?controller=home" title="Trang chủ">Home</a></li>
-                        <li><a href="index.php?controller=product&action=index" title="Sản phẩm">Products</a></li>
+                        <li class="dropdown">
+                            <a href="index.php?controller=product&action=index" title="Sản phẩm">Products</a>
+                            <div class="dropdown-menu">
+                                <?php foreach ($categories as $category): ?>
+                                    <a class="dropdown-item" href="index.php?controller=product&action=product&categoryid=<?php echo $category['id'] ?>">
+                                        <?php echo $category['name'] ?></a>
+                                <?php endforeach;?>
+                            </div>
+                        </li>
                         <li><a href="" title="Về chúng tôi">About</a></li>
                         <li><a href="" title="Liên hệ">Contact</a></li>
                         <li><a href="index.php?controller=customer&action=account" title="Tài khoản">Account</a></li>
