@@ -43,11 +43,11 @@ if (!isset($_SESSION['user'])) {
 
     <header class="main-header">
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="index.php" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>A</b>LT</span>
+            <span class="logo-mini"><b>A</b>BF</span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>Admin</b>LTE</span>
+            <span class="logo-lg"><b>Admin</b>BigFamily</span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top">
@@ -62,9 +62,9 @@ if (!isset($_SESSION['user'])) {
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <?php if (!empty($avatar)):?>
-                            <img src="assets/uploads/<?php echo $avatar; ?>" class="img-circle" width="50" alt="User Image">
+                                <img src="assets/uploads/<?php echo $avatar; ?>" class="img-circle" width="50" alt="User Image">
                             <?php else: ?>
-                            <img src="assets/uploads/user.png" width="30" class="img-circle" alt="User Image">
+                                <img src="assets/uploads/user.png" width="30" class="img-circle" alt="User Image">
                             <?php endif;?>
                             <span class="hidden-xs"></span>
                         </a>
@@ -72,7 +72,7 @@ if (!isset($_SESSION['user'])) {
                             <!-- User image -->
                             <li class="user-header">
                                 <?php if (!empty($avatar)):?>
-                                <img src="assets/uploads/<?php echo $avatar; ?>" class="img-circle" alt="User Image">
+                                    <img src="assets/uploads/<?php echo $avatar; ?>" class="img-circle" alt="User Image">
                                 <?php else: ?>
                                     <img src="assets/uploads/user.png" width="50" class="img-circle" alt="User Image">
                                 <?php endif;?>
@@ -105,9 +105,9 @@ if (!isset($_SESSION['user'])) {
             <div class="user-panel" style="overflow: inherit ">
                 <div class="pull-left image">
                     <?php if (!empty($avatar)):?>
-                    <img src="assets/uploads/<?php echo $avatar; ?>" class="img-circle" alt="User Image">
+                        <img src="assets/uploads/<?php echo $avatar; ?>" class="img-circle" alt="User Image">
                     <?php else: ?>
-                    <img src="assets/uploads/user.png" width="50" class="img-circle" alt="User Image">
+                        <img src="assets/uploads/user.png" width="50" class="img-circle" alt="User Image">
                     <?php endif;?>
                 </div>
                 <div class="pull-right info" >
@@ -169,23 +169,23 @@ if (!isset($_SESSION['user'])) {
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <?php if(!empty($this->error)):?>
-            <div class="alert alert-danger"><?php $this->error?></div>
+                <div class="alert alert-danger"><?php $this->error?></div>
             <?php endif;?>
             <?php if (isset($_SESSION['error'])):?>
-            <div class="alert alert-danger">
-                <?php
-                echo $_SESSION['error'];
-                unset($_SESSION['error']);
-                ?>
-            </div>
+                <div class="alert alert-danger">
+                    <?php
+                    echo $_SESSION['error'];
+                    unset($_SESSION['error']);
+                    ?>
+                </div>
             <?php endif;?>
             <?php if (isset($_SESSION['success'])):?>
-            <div class="alert alert-success">
-                <?php
-                echo $_SESSION['success'];
-                unset($_SESSION['success']);
-                ?>
-            </div>
+                <div class="alert alert-success">
+                    <?php
+                    echo $_SESSION['success'];
+                    unset($_SESSION['success']);
+                    ?>
+                </div>
             <?php endif;?>
         </section>
     </div>
@@ -205,7 +205,7 @@ if (!isset($_SESSION['user'])) {
         <div class="pull-right hidden-xs">
             <b>Version</b> 2.4.13-pre
         </div>
-        <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE</a>.</strong> All rights
+        <strong>©2020 Công ty cổ phần BigFamily .Địa chỉ tại: số 1 Hoàng Đạo Thúy - Thanh Xuân - Hà Nội. Email: cskh@bigfamily.com.</strong> All rights
         reserved.
     </footer>
     <!-- Add the sidebar's background. This div must be placed
