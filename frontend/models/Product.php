@@ -22,6 +22,8 @@ class Product extends Model{
     public $created_at;
     public $updated_at;
     public $str_search;
+    public $size_text;
+    public $size_id;
 
     public function __construct()
     {
@@ -73,6 +75,17 @@ class Product extends Model{
       $products = $sql_select_limit->fetchAll(PDO::FETCH_ASSOC);
 
       return $products;
+
+    }
+    public  function getSize($id){
+        $sql_select_size = $this->connection->prepare(
+            "SELECT s.size_text   FROM size s 
+                        inner join categories c on s.categories_id = c.id 
+                        inner join products p on c.id = p.category_id
+                        WHERE p.id = $id  ");
+        $sql_select_size ->execute();
+        $products = $sql_select_size->fetchAll(PDO::FETCH_ASSOC);
+        return $products;
 
     }
     

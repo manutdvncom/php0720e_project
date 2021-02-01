@@ -41,6 +41,6 @@
             </div>
         </div>
         <hr>
-        <p class="copyright"> ©2020 Công ty cổ phần BigFamily .Địa chỉ tại: số 1 Hoàng Đạo Thúy - Thanh Xuân - Hà Nội. Email: cskh@bigfamily.com</p>
+        <p class="copyright"> ©Copyright 2021 Công ty cổ phần BigFamily .Địa chỉ tại: số 1 Hoàng Đạo Thúy - Thanh Xuân - Hà Nội. Email: cskh@bigfamily.com</p>
     </div>
 </div>

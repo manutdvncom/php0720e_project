@@ -4,6 +4,8 @@ require_once 'models/Category.php';
 require_once 'models/Product.php';
 
 
+
+
 class HomeController extends Controller {
       public function index() {
           $category_model = new Category();
