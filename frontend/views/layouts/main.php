@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="vn">
 <head>
     <meta charset="utf-8">
@@ -6,18 +6,47 @@
     <title>BigFamily</title>
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
     <link href="assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon">
     <script type="text/javascript" src="assets/js/jquery-3.5.1.min.js"></script>
-<!--    <script type="text/javascript" src="assets/js/lightslider.min.js"></script>-->
     <style>
         .link__Social{
             text-decoration: none;
             color: #8a8a8a;
-
         }
         .footer-col-4 li{
             padding: 5px;
+        }
+        @-webkit-keyframes popUpEntrada {
+            0%{opacity: 0; margin-top: -20%;}
+            75%{margin-top: 5%;}
+            100%{opacity: 1;}
+        }
+        @keyframes popUpEntrada {
+            0%{opacity: 0; margin-top: -20%;}
+            75%{margin-top: 5%;}
+            100%{opacity: 1;}
+        }
+        @-webkit-keyframes popUpSaida {
+            0%{opacity: 1;}
+            75%{opacity: 1; margin-top: -20%;}
+            100%{opacity: 0;margin-top: 40%;}
+        }
+        @keyframes popUpSaida {
+            0%{opacity: 1;}
+            75%{opacity: 1; margin-top: -20%;}
+            100%{opacity: 0;margin-top: 40%;}
+        }
+        .popUpEntrada{
+            display: block !important;
+            animation: popUpEntrada 0.5s;
+            -webkit-animation: popUpEntrada 0.5s;
+        }
+        .popUpSaida{
+            display: block !important;
+            animation: popUpSaida 0.5s;
+            -webkit-animation: popUpSaida 0.5s;
+            -webkit-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;
         }
 
     </style>
@@ -59,6 +88,7 @@
 
             }
         }
+
     </script>
 </body>
 </html>

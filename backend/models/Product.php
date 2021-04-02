@@ -125,5 +125,27 @@ class Product extends Model{
             ->prepare("DELETE FROM products WHERE id = $id");
         return $sql_delete->execute();
     }
+    public function getProductOrderId($id){
+        $sql_select = $this->conn->prepare("SELECT order_details.quantity , order_details.sizeSelect, products.title,products.price,products.avatar FROM order_details
+                INNER JOIN orders ON order_details.order_id = orders.id 
+                INNER JOIN products ON order_details.product_id = products.id 
+                WHERE orders.id = $id");
+        $sql_select->execute();
+        $product = $sql_select->fetchAll(PDO::FETCH_ASSOC);
+        return $product;
+    }
+    public function getQuantity($id){
+        $sql_select = $this->conn->prepare("SELECT  products.amount FROM products WHERE products.id = $id");
+        $sql_select->execute();
+        $quantity = $sql_select->fetchAll(PDO::FETCH_ASSOC);
+        return $quantity;
+    }
+    public  function  updateQuantity($id){
+        $sql_update = $this->conn->prepare("UPDATE products SET amount = :amount  where id = $id");
+        $arr_update = [
+            ':amount' => $this->amount,
+        ];
+        return $sql_update->execute($arr_update);
+    }
 }
 ?>

@@ -1,12 +1,14 @@
-<style>
-
+ <style>
+    .header,.footer{
+        display: none;
+    }
     section{
         margin-top: 55px;
     }
     a{
-        color: #228ad6
+        color: #ff523b;
     }
-    .container {
+    .container-pay {
         width: 600px;
         background: #fff;
         margin: 90px auto 0 auto;
@@ -115,13 +117,13 @@
         overflow: hidden;
         width: 275px;
         border-radius: 4px;
-        font-size: 13px;
+        font-size: 16px;
         color: #fff;
         text-align: center;
-        background: #2889d6;
+        background: #ff523b;
         height: 45px;
-    }
-    .payoffline span{
+    }.choosepayment>div>a:hover{background: #563434;}
+     .payoffline span{
         line-height: 45px;
     }
     .atm div{
@@ -130,6 +132,7 @@
     .atm p{
         margin-bottom: 5px;
         line-height: 12px;
+        color: white;
     }
     .visa div{
         display: flex;
@@ -254,7 +257,7 @@
         color: #288ad6;
     }
     .buyother {
-        display: block;
+        display: none;
         overflow: hidden;
         background: #fff;
         line-height: 40px;
@@ -268,6 +271,7 @@
         border: 1px solid #288ad6;
         border-radius: 4px;
     }
+    .active{display: block}
     .popup {
         background: rgba(0,0,0,.4);
         cursor: pointer;
@@ -312,7 +316,7 @@
     .popup a{
         display: inline-block;
         text-transform: uppercase;
-        border: 1px solid #288ad6;
+        border: 1px solid #ff523b;
         padding: 10px;
         border-radius: 4px;
         cursor: pointer;
@@ -323,7 +327,7 @@
         background: #fff;
     }
     .popup a.confirm{
-        background: #228ad6;
+        background: #ff523b;
         color:#fff;
     }
     #popup-success p{
@@ -333,33 +337,70 @@
         font-size: 18px;
         color: #e10c00
     }
+     .payoffline>button{
+         border: none;
+         background-color: #ff523b;
+         color: #fff;
+         font-size: 16px;
+         width: 100%;
+     }
+    .payoffline:hover{background: #563434;}
+    .payoffline:hover button{background: #563434;}
 </style>
 
 
 
-<?php $_SESSION['TimeOrder'] = $_POST['TimeOrder'];$_SESSION['TimeDelivery'] = $_POST['TimeDelivery'];$_SESSION['phonenumber'] = $_POST['PhoneNumber'] ?>
+<?php
+//    echo "<pre>";
+//    print_r($_SESSION['cart']);
+//    echo "</pre>";
+?>
 <section>
-	<div class="container">
+    <form action="index.php?controller=pay&action=insert">
+	<div class="container-pay">
 		<div class="picsuccess">
             <div class="notistatus">
-               	<i class="iconnoti iconsuccess"></i>Đặt hàng thành công
+               	<i class="iconnoti iconsuccess"></i>Kiểm Tra Và Thực Hiện Đặt Hàng
             </div>
         </div>
         <div class="thank">
-        Cảm ơn <b><?php echo $_POST['gender'] ." ". $_POST['FullName'];  ?></b> đã cho iMobile.com cơ hội được phục vụ. Trước , nhân viên iMobile.com sẽ <b>gửi tin nhắn hoặc gọi điện </b>xác nhận đặt hàng tại siêu thị cho <?php echo $_POST['gender']; ?>
+        Cảm ơn
+            <b><?php echo $_POST['gender'] ." ". $_POST['FullName'];  ?></b>
+            đã cho BigFamily cơ hội được phục vụ. Nhân viên  BigFamily sẽ
+            <b>gửi tin nhắn hoặc gọi điện </b>xác nhận đặt hàng tại siêu thị cho <?php echo $_POST['gender']; ?> sớm nhất có thể.
+            <input type="hidden" name="FullName" value="<?php echo $_POST['FullName']; ?>">
+            <input type="hidden" name="gender" value="<?php echo $_POST['gender']; ?>">
     	</div>
     	<div class="titlebill">Thông tin đặt hàng:</div>
     	<div class="infoorder">
 			<div>Người nhận: <b><?php echo $_POST['FullName']; ?>, <?php echo $_POST['PhoneNumber']; ?></b></div>
-			<div>Địa chỉ nhận hàng: <b><?php if($_POST['BillingAddress']==null){echo "Các siêu thị thuộc hệ thống trong khu vực: ";}; echo $_POST['BillingAddress'].", ".$_POST['ward'].", ".$_POST['district'].", ".$_POST['province']; ?></b></div>
+            <input type="hidden" name="PhoneNumber" value="<?php echo $_POST['PhoneNumber']; ?>">
+            <?php
+                if ($_POST['ship']==0){
+                    $address = "Nhận tại cửa hàng khu vực ".$_POST['district'] .",". $_POST['province'];
+                }else{
+                    $address = $_POST['BillingAddress'] .",". $_POST['ward'] .",".$_POST['district'] .",". $_POST['province'];
+                }
+
+            ?>
+            <input type="hidden" name="address" value="<?php echo $address ?>">
+            <input type="hidden" name="OrderNote" value="<?php echo $_POST['OrderNote']; ?>">
+            <input type="hidden" name="Email" value="<?php echo $_POST['Email']; ?>">
+            <input type="hidden" name="TimeDelivery" value="<?php echo $_POST['TimeDelivery']; ?>">
+
+            go
+
+			<div>Địa chỉ nhận hàng: <b><?php echo $address ?></b></div>
 			<div>Thời gian nhận hàng dự kiến: 
 				<b> Trước <?php $currenttime = date('l, yy-m-d H:i:s');
 					$date = new DateTime($currenttime);
 					$date->add(new DateInterval('P1D'));
 					echo $date->format('H')." giờ 00 phút "." Ngày mai ".$date->format('d/m'); ?>	
 				</b>
+
 			</div>
-			<div>Tổng tiền: <strong><?php echo number_format($_POST['pay'],0,"","."); ?>₫</strong></div>
+			<div>Tổng tiền: <strong><?php echo number_format($_POST['totalmoney'],0,"","."); ?>₫</strong></div>
+            <input type="hidden" name="totalmoney" value="<?php echo $_POST['totalmoney']; ?>">
     	</div>
     	<div class="mess-payment" id="mess-payment">
 		    <span>
@@ -372,38 +413,40 @@
 		    </div>
 		    <div class="clr"></div>
 		    <div class="grid">
-		        <a href="javascript:choosePayOffline()" class="payoffline">
-		            <div>
+		        <a href="javascript:void(0)" class="payoffline" onclick="choosePayOffline()">
+		            <button type="submit" name="submit" >
 		                <span>Tiền mặt khi nhận hàng</span>
-		            </div>
+                        <input type="hidden" name="submit" value="submit">
+
+                    </button>
 		        </a>
 		        <a href="javascript:void(0)" class="atm">
 		            <div>
 		                <span>
 		                    Thanh toán thẻ
 		                </span>
-		                <img src="public/img/icon/ATM2020.png" alt="Thanh toán qua thẻ ATM" width="30">
+		                <img src="assets/images/ATM2020.png" alt="Thanh toán qua thẻ ATM" width="30">
 		            </div>
 		            <p>(Có Internet Banking)</p>
 		        </a>
 		        <a href="javascript:void(0)" class="visa">
 		            <div>
 		                <span>Thanh toán thẻ </span>
-		                <img src="public/img/icon/Visa2020.png" alt="Thanh toán qua thẻ Visa, Master Card">
-		                <img src="public/img/icon/Master2020.png" alt="Thanh toán qua thẻ Visa, Master Card">
-		                <img src="public/img/icon/JCB2020.png" alt="Thanh toán qua thẻ Visa, Master Card">
+		                <img src="assets/images//Visa2020.png" alt="Thanh toán qua thẻ Visa, Master Card">
+		                <img src="assets/images/Master2020.png" alt="Thanh toán qua thẻ Visa, Master Card">
+		                <img src="assets/images/JCB2020.png" alt="Thanh toán qua thẻ Visa, Master Card">
 		            </div>
 		        </a>
 		        <a href="javascript:void(0)" class="qr-code" >
 		            <div>
 		                <span>Thanh toán qua QR Code</span>
-		                <img src="public/img/icon/logo-vnp@2x.png" alt="Thanh toán qua Qr-Code Vnpay" height="36">
+		                <img src="assets/images/logo-vnp@2x.png" alt="Thanh toán qua Qr-Code Vnpay" height="36">
 		            </div>
 		        </a>
 		    </div>
 		</div>
-		<div class="deleteOrder">
-            <a href="javascript:cancel()">Hủy đơn hàng</a>
+		<div class="deleteOrder" >
+            <a style="color:#2889d6; " href="javascript:cancel()">Hủy đơn hàng</a>
         </div>
         <div class="callship">Khi cần hỗ trợ vui lòng gọi
         	<a href="tel:18001060">1800.1060</a> (7h30 - 22h)
@@ -417,31 +460,32 @@
 			<li>
 				<div class="colimg">
 					<a href="<?php echo $cart['category'].'/detail/'.$cart['id'] ?>">
-						<img src="<?php echo 'public/'.$cart['image'] ?>">
+						<img src="../backend/assets/uploads/<?php echo $cart['avatar']?>">
 					</a>
 				</div>
 				<div class="colinfo">
-    				<strong><?php echo number_format($cart['pricecurrent'],0,"","."); ?>₫</strong>
+    				<strong><?php echo number_format($cart['price'],0,"","."); ?>₫</strong>
     				<a href="<?php echo $cart['category'].'/detail/'.$cart['id'] ?>"><?php echo $cart['name']; ?></a>
     				<div class="onecolor">
-                        <span>Màu:</span> <?php echo $cart['color'] = $_POST['color'][$i]; ?>                         
+                        <span>size:</span> <?php echo $cart['select_size'] ; ?>
                     </div>
                     <div class="quan">
-                        <span>Số lượng:</span><?php echo $cart['quantity'] = $_POST['amount'][$i];$i++ ?>
+                        <span>Số lượng:</span><?php echo $cart['quantity'] ; ?>
                     </div>
                     <div class="clr"></div>
-    				<div class="promotion  webnote ">
-						<span class="notnull"><?php echo $cart['promo1']; ?></span>
-					    <span class="notnull"><?php echo $cart['promo2']; ?></span>
-					    <span class="notnull"><?php echo $cart['promo3']; ?></span>
-					    <span class="notnull"><?php echo $cart['promo4']; ?></span>
-					</div>
+<!--    				<div class="promotion  webnote ">-->
+<!--						<span class="notnull">--><?php //echo $cart['promo1']; ?><!--</span>-->
+<!--					    <span class="notnull">--><?php //echo $cart['promo2']; ?><!--</span>-->
+<!--					    <span class="notnull">--><?php //echo $cart['promo3']; ?><!--</span>-->
+<!--					    <span class="notnull">--><?php //echo $cart['promo4']; ?><!--</span>-->
+<!--					</div>-->
 				</div>
 			</li>
 			<?php } ?>
 		</ul>
-    	<a href="pay/desSession" class="buyother">Về trang chủ</a>
+    	<a href="index.php?controller=pay&action=des_session" class="buyother">Về trang chủ</a>
 	</div>
+    </form>
 </section>
 <div class="popup" id="popup">
 	<div>
@@ -456,7 +500,7 @@
 	<div>
 		<h1>Hủy đơn hàng</h1>
 		<p>Đơn hàng đã được hủy thành công!</p>
-		<p>Sẽ tự động đóng trong : <b id="time">5</b> s</p>
+		<p>Sẽ tự động đóng trong : <b id="time">6</b> s</p>
 		<a class="close" href="javascript:Redirect()">Đóng</a>
 	</div>
 </div>
@@ -469,26 +513,57 @@
 		document.getElementById('choosepayment').style.display = "none"
 		document.getElementById('mess-payment').style.display = "block"
 		document.querySelector('.deleteOrder').style.display = "none"
+        document.getElementById('popup').style.display = 'flex';
+        $("#popup>div").removeClass("popUpSaida").addClass("popUpEntrada");
+        $(".popUpEntrada>h1").html("Cảm Ơn Quý Khách")
+        $(".popUpEntrada>p").html("Chúng tôi sẽ gửi Email đến mong quý khách xem và hãy chú ý đến điện thoại để nhân viên của chúng tôi gọi đến.")
+        $(".popUpEntrada>p.p1").html("")
+        $(".popUpEntrada>.confirm").css("display","none")
+        $(".buyother").addClass('active')
+        setTimeout(function() {
+            window.location = "index.php?controller=pay&action=des_session";
+        }, 5000);
+
 	}
+
+	$('form').on("submit",function (event) {
+        event.preventDefault();
+        $.ajax({
+            method:'post',
+            url:'index.php?controller=pay&action=insert',
+            data:$('form').serialize(),
+        });
+    })
 	function cancel(){
-		document.getElementById('popup').style.display = 'flex'
+		document.getElementById('popup').style.display = 'flex';
+        $("#popup>div").removeClass("popUpSaida").addClass("popUpEntrada");
 	}
 	function close(){
-		document.getElementById('popup').style.display = 'none'	
+		// document.getElementById('popup').style.display = 'none'
+        $("#popup>div").removeClass("popUpEntrada").addClass("popUpSaida");
+
+        setTimeout(function() {
+            $("#popup").css("display", "none");
+        }, 900);
 	}
 	function Confirm(){
-		close();
-		document.getElementById('popup-success').style.display = 'flex'
+        $("#popup>div").removeClass("popUpEntrada").addClass("popUpSaida");
+		document.getElementById('popup-success').style.display = 'flex';
+        $("#popup-success>div").removeClass("popUpSaida").addClass("popUpEntrada");
 		var realtime = document.getElementById('time').innerHTML;
 		parseInt(realtime);
 		var pause = setInterval(runtime,1000)
+        // setTimeout(function() {
+        // }, 5000);
 		function runtime(){
-			realtime-=1;
-			document.getElementById('time').innerHTML = realtime;
-			if (realtime==0) { window.location = "pay/cancel"; clearInterval(pause) }
-		}
-	}
+            realtime-=1;
+            document.getElementById('time').innerHTML = realtime;
+            if (realtime==0) { window.location = "index.php?controller=pay&action=des_session"; clearInterval(pause) }
+        }
+        window.location = "index.php?controller=pay&action=des_session";
+
+    }
 	function Redirect(){
-		window.location="pay/cancel";
+		window.location="index.php";
 	}
 </script>

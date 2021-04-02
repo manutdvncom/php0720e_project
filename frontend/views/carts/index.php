@@ -1,13 +1,20 @@
 <style>
-    body{
-        background-color:#f0f0f0;
+    .col-2-header{display: none}
+    .header {
+        background-image: none;
+        background-color: #fff!important;
+
     }
-    section{
-        margin-top:55px;
+    body{
+        background-color:#fff;
     }
     a.buymore{
         color: #ff523b;
     }
+    #cart{
+        margin: 100px auto 50px;
+    }
+
     .bar-top{
         display: block;
         overflow: hidden;
@@ -45,7 +52,7 @@
     .yourcart {
         display: block;
         overflow: hidden;
-        background: #f0f0f0;
+        /*background: #f0f0f0;*/
         text-align: right;
         color: #333;
         line-height: 40px;
@@ -250,20 +257,6 @@
         width: 91%;
         cursor: pointer;
     }
-    .choosesize:after {
-        content: '';
-        width: 0;
-        right: 0;
-        border-top: 6px solid #ff523b;
-        border-left: 6px solid transparent;
-        border-right: 6px solid transparent;
-        display: inline-block;
-        vertical-align: middle;
-        margin: 13px 5px 0 0;
-        float: right;
-        position: absolute;
-        top: 0;
-    }
     .choosesize .listsize{
         display: none;
         padding: 0 10px;
@@ -302,7 +295,7 @@
     .choosesize .pseudosize.act:after{
         border-width: 9px;
         margin-left: 1px;
-        border-bottom-color: #fff;
+        border-bottom-color: #f0f0f0;
         z-index: 100;
     }
     .blocksize{
@@ -726,6 +719,7 @@
         color: #999;
         display: inline;
     }
+    #nullcart{margin-top:55px;}
     .null_cart {
         overflow: hidden;
         width: 490px;
@@ -792,21 +786,54 @@
     .grid2::-webkit-scrollbar-thumb{
         background: #ff523b;
     }
+    @media only screen and (max-width: 600px) {
+        ul.list_order>li{
+            display: flex!important;
+        }
+        .choosenumber,.choosesize{
+            float: none!important;
+        }
+        .choosenumber{width: 50%;}
+        div.colimg{
+            width: 210px!important;
+        }
+        #cart{
+            margin: 50px auto 25px;
+        }
+        .provision{
+            line-height: 20px;
+        }
+        .dropdown{
+            font-size: 12px;
+        }
+        .city,.ward{
+            left: -21px;
+        }
+        .district{
+            left: -150px;
+        }
+        .bar-top .buymore{
+            font-size: 12px;
+        }
+        .buymore::before, .buymore::after{
+            z-index: -1;
+        }
+        .null_cart{
+            width: 290px;
+        }
+        .buyother{
+            width: 280px;
+        }
+    }
 </style>
 <?php
 //    echo "<pre>";
-//        foreach ($_SESSION['cart'] as $product_id => $cart):
-//            echo $cart['quantity'];
-//        endforeach;
+//        print_r($_SESSION['cart']);
 //    echo "</pre>";
-
-
 
 //echo "</pre>";
 
 ?>
-
-
 <section id="cart">
     <div class="bar-top">
         <a href="index.php" class="buymore">Mua thêm sản phẩm khác</a>
@@ -820,7 +847,7 @@
 				<span class="dot"></span>
 			</span>
         </div>
-        <form action="index.php?controller=pay&action=index" method="post" accept-charset="utf-8">
+        <form action="Pay.html" method="post" accept-charset="utf-8">
             <div class="detail_cart">
                 <ul class="list_order">
                     <?php
@@ -831,7 +858,8 @@
                                 <a href="">
                                     <img data-value="<?php echo $product_id ?>" src="../backend/assets/uploads/<?php echo $cart['avatar']?>" >
                                 </a>
-                                <a class="delete" href="index.php?controller=cart&action=delete&id=<?php echo $product_id; ?>">
+                                <?php $text_url = "-".str_replace(' ' ,'-', $cart['name']); ?>
+                                <a class="delete" href="XoaSanPham<?php echo$product_id?><?php echo $text_url?>.html">
                                     <span></span>
                                     Xóa
                                 </a>
@@ -843,32 +871,18 @@
                                     $price_format = number_format($cart['price']);
                                     echo $price_format;
                                     ?>₫
-<!--                                    <input type="hidden" name="price[]" value="">-->
+
                                 </strong>
-                                <a href="index.php?controller=product&action=detail&id=<?php echo $product_id ; ?>"><?php echo $cart['name']; ?></a>
-                                <div class="choosesize"  id="get-id-choosize">
+                                <a href="ChiTietSanPham<?php echo$product_id?><?php echo $text_url?>.html"><?php echo $cart['name']; ?></a>
+                                <div class="choosesize"  id="sizevalue">
                                     <div class="pseudosize"></div>
-                                    <span class="size">Size: </span>
-                                    <div class="listsize">
-                                            <?php foreach ($cart['size'] as $row ):?>
-                                                <?php foreach ($row as $innerArray ):?>
-                                                <div class="blocksize" data-size="<?php echo $innerArray['size_text']?>">
-                                                    <span>
-                                                        <?php echo " ".$innerArray['size_text'];?>
-                                                    </span>
-                                                </div>
-                                                <?php endforeach;?>
-                                            <?php endforeach;?>
-
-                                    </div>
-                                    <input type="hidden" name="size[]" value="">
+                                    <span class="size">Size lựa chọn :<?php echo $cart['select_size']; ?></span>
                                 </div>
-
                                 <div class="choosenumber">
-                                    <div class="abate active" style="pointer-events: auto;" data-id="<?php echo $product_id ; ?>"></div>
+                                    <div class="abate"  data-id="<?php echo $product_id ; ?>"></div>
                                     <div class="number"><?php echo $cart['quantity']; ?></div>
                                     <div class="augment" data-id="<?php echo $product_id ; ?>"></div>
-                                    <input type="hidden" name="quantity[]" value="<?php echo $cart['quantity']; ?>" class="amount">
+                                    <input type="hidden" min="1" name="quantity[]" value="<?php echo $cart['quantity']; ?>" class="amount">
                                     <input type="hidden" name="price[]" value="<?php echo $cart['price']; ?>">
                                 </div>
                                 <div class="clr"></div>
@@ -901,8 +915,8 @@
             </div>
             <div class="infouser ">
                 <div class="malefemale">
-                    <label><input type="radio" name="gender" value="anh" id="male" <?php if(isset($_SESSION['gender'])){ if($_SESSION['gender']=='anh')echo "checked"; } ?> ><span>Anh</span></label>
-                    <label><input type="radio" name="gender" value="chị" id="female" <?php if(isset($_SESSION['gender'])){ if($_SESSION['gender']=='chị')echo "checked"; } ?>><span>Chị</span></label>
+                    <label><input type="radio" name="gender" value="anh" id="male"  class="gender"><span>Anh</span></label>
+                    <label><input type="radio" name="gender" value="chị" id="female" class="gender"><span>Chị</span></label>
                     <span id="errorgender" class="error"></span>
                 </div>
                 <div class="areainfo">
@@ -976,41 +990,12 @@
                             <input type="hidden" name="TimeDelivery" value="<?php  echo $TimeDelivery ?>">
                         </div>
                     </div>
-
-<!--                    <div class="ol ol1" style="margin-top: 10px;">-->
-<!--                        <label>-->
-<!--<!--                            <input type="checkbox" name="serviceother[]" value="Gọi người khác nhận hàng (Nếu có)">-->
-<!--<!--                            <span> Gọi người khác nhận hàng (Nếu có)</span>-->
-<!--                        </label>-->
-<!--                    </div>-->
-<!--                    <div class="infocontact">-->
-<!--                        <div class="malefemale">-->
-<!--                            <label><input type="radio" name="serviceother[]" value="anh" id="male"><span>Anh</span></label>-->
-<!--                            <label><input type="radio" name="serviceother[]" value="chị" id="female"><span>Chị</span></label>-->
-<!--                        </div>-->
-<!--                        <div class="clr"></div>-->
-<!--                        <div class="areainfo">-->
-<!--                            <div class="left">-->
-<!--                                <input type="text" class="saveinfo" name="serviceother[]" placeholder="Họ và tên" maxlength="50" value="">-->
-<!--                            </div>-->
-<!--                            <div class="right">-->
-<!--                                <input type="tel" class="saveinfo" name="serviceother[]" placeholder="Số điện thoại" maxlength="10" value="">-->
-<!--                            </div>-->
-<!--                            <div class="clr"></div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="clr"></div>-->
-<!---->
-<!--                    <div class="ol ol3">-->
-<!---->
-<!--                    </div>-->
-
                 </div>
             </div>
             <div class="new-follow">
                 <div class="choosepayment">
                     <input type="hidden" name="TimeOrder" value="<?php echo date('Y-m-d H:i:s'); ?>">
-                    <button name="submit" type="submit" onclick="return checkInforUser()" class="payoffline full">Xác nhận lại đơn hàng</button>
+                    <button  onclick="return checkInforUser()" class="payoffline full">Xác nhận lại đơn hàng</button>
                 </div>
                 <p style="text-align:center">Bạn có thể chọn hình thức thanh toán sau khi đặt hàng</p>
             </div>
@@ -1022,7 +1007,7 @@
     <div class="null_cart">
         <i class="iconnoti iconnull"></i>
         Không có sản phẩm nào  trong giỏ hàng
-        <a href="index.php" class="buyother">Về trang chủ</a>
+        <a href="BigFamily.html" class="buyother">Về trang chủ</a>
         <div class="callship">Khi cần trợ giúp vui lòng gọi
             <a href="tel:18001060">1900.2803</a> hoặc <a href="tel:02836221060">024.2001.2803</a> (7h30 - 22h)
         </div>
@@ -1030,23 +1015,6 @@
 </section>
 <script type="text/javascript" charset="utf-8" async defer>
     $(document).ready(function($) {
-        $('.choosesize').each(function() {
-        	$('.size',this).append($('.blocksize',this).attr('data-size'))
-        	$('input[name="size[]"]',this).val($('.blocksize',this).attr('data-size'))
-        });
-        $('.choosesize').click(function() {
-        	$('.listsize', this).slideToggle(200)
-        	$('.pseudosize', this).toggleClass('act');
-        });
-        $('.blocksize').click(function(event) {
-        	size = $(this).attr('data-size');
-        	$(this).closest('.choosesize').find('span.size').text("size: "+size);
-        	inputsize = $(this).closest('.choosesize').find('input')
-        	inputsize.val(size)
-        	src = $(this).find('img').attr('src')
-        	$(this).closest('.list_order li').find('.colimg a img').attr('src',src)
-        });
-
         $('.textcode').click( function(event) {
             $('.inputcode').css('display','block')
         });
@@ -1087,7 +1055,6 @@
                 $('#ward').toggleClass('show');
             }
         });
-
         $('.district').on('click','.listdist',function(event) {
             timing();
             $('.dot').addClass('active')
@@ -1117,7 +1084,6 @@
             $('#wardvalue').html(listward);
             $('#wardvalue').attr('value',index);
         });
-
         $.post('index.php?controller=getaddress&action=get_province', {}, function(data) {
             $('.city').html(data);
         });
@@ -1125,18 +1091,23 @@
         $.post('index.php?controller=getaddress&action=get_district', {'id': ProvinceID}, function(data) {
             $('.district').html(data);
         });
-
         $('.city').on('click','.province',function(event) {
             ProvinceID = $('#default').attr('value');
             $.post('index.php?controller=getaddress&action=get_district', {'id': ProvinceID}, function(data) {
                 $('.district').html(data);
             });
+            document.getElementById('wardvalue').innerHTML = 'Chọn phường, xã'
+            document.getElementById('districtvalue').innerHTML = 'Chọn quận, huyện'
+            $('#districtvalue').attr("value","0")
+            $('#wardvalue').attr("value","0")
         });
         $('.district').on('click','.listdist',function(event) {
             DistrictID = $('#districtvalue').attr('value');
             $.post('index.php?controller=getaddress&action=get_ward', {'id': DistrictID}, function(data) {
                 $('.ward').html(data);
             });
+            $('#wardvalue').attr("value","0")
+            document.getElementById('wardvalue').innerHTML = 'Chọn phường, xã'
             listprovince = $('#default').html()
             $('input[name="province"]').val(listprovince)
             listdist = $('#districtvalue').html();
@@ -1205,15 +1176,18 @@
     function checkInforUser(){
         male = document.getElementById('male');
         female = document.getElementById('female');
-        district = document.getElementById('districtvalue').innerHTML
-        ward = document.getElementById('wardvalue').innerHTML
+        district = document.getElementById('districtvalue').innerHTML;
+        ward = document.getElementById('wardvalue').innerHTML;
         if(district=='Chọn quận, huyện'){
             document.getElementById('nulldistrict').innerHTML = 'Quý khách vui lòng chọn quận huyện'
+            document.getElementById('nullward').innerHTML = 'Quý khách vui lòng chọn phường xã'
             document.getElementById('district').style.marginBottom = '10px'
             document.getElementById("nulldistrict").style.cssText = 'line-height:30px;margin-top:7px;'
+            document.getElementById("nullward").style.cssText = 'line-height:30px;margin-top:11px;'
         }
         if(ward=='Chọn phường, xã'){
-            document.getElementById('nullward').innerHTML = 'Quý khách vui lòng chọn phưỡng xã'
+            document.getElementById('nullward').innerHTML = 'Quý khách vui lòng chọn phường xã'
+            document.getElementById("nullward").style.cssText = 'line-height:30px;margin-top:11px;'
         }
         if (!male.checked&&!female.checked) {
             document.getElementById('errorgender').innerHTML = "Mời quý khách chọn danh xưng";
@@ -1271,12 +1245,10 @@
         document.getElementById('nullcart').style.display = 'none';
         document.getElementById('cart').style.display = 'block'
     }
-
     var notnull = document.querySelectorAll('.promotion span');
     for (var i = 0; i < notnull.length; i++) {
         if(notnull[i].innerHTML.trim()==='') notnull[i].classList.remove('notnull')
     }
-
     if (totalmoney != "0₫"){
         // var pay = 0;
         var totalmoney = 0;
@@ -1284,10 +1256,10 @@
         var priceunit = document.querySelectorAll('input[name="price[]"]');
         // console.log(priceunit);
         var augment = document.querySelectorAll('.augment');
+        var abate = document.querySelectorAll('.abate');
         var number = document.querySelectorAll('.number');
         var quantity = document.querySelectorAll('input[name="quantity[]"]');
         // console.log(amount);
-
         for ( i = 0; i < quantity.length; i++) {
             a = parseInt(quantity[i].value);
             price = parseInt(priceunit[i].value);
@@ -1296,7 +1268,6 @@
             totalmoney+=_price;
 
         }
-
         document.querySelector('input[name="totalmoney"]').value = totalmoney;
 
         document.getElementById('totalmoney').innerHTML = formatNumber(totalmoney) + '₫';
@@ -1306,6 +1277,7 @@
         // document.querySelector('input[name="pay"]').value = pay;
 
         document.querySelectorAll('.augment').forEach( item => {
+
             item.addEventListener('click',function() {
                 var indexNumber = Array.from(augment).indexOf(event.target);
                 var valueNumber = number[indexNumber].innerHTML;
@@ -1329,10 +1301,15 @@
 
             })
         });
-                var abate = document.querySelectorAll('.abate');
-                document.querySelectorAll('.abate').forEach( item => {
+
+
+        document.querySelectorAll('.abate').forEach( item => {
+                // var test = this.find()
+                // var test2 = number[test].html;
+                // console.log(test2)
                 item.addEventListener('click',function() {
                 var indexNumber = Array.from(abate).indexOf(event.target);
+                    // console.log(indexNumber)
                 var valueNumber = number[indexNumber].innerHTML;
                 valueNumber = parseInt(valueNumber);
                 valueNumber-=1;
@@ -1353,15 +1330,19 @@
                 document.querySelector('input[name=totalmoney]').value = totalmoney;
             })
         });
+
     };
     var time = 360000;
     var run = setInterval(runtimeDestroySession,1000);
     function runtimeDestroySession(){
         time -= 1000;
-        if (time==0) {clearInterval(run);window.location = "index.php?controller=cart&action=des_session"}
+        if (time==0) {
+            clearInterval(run);
+            window.location = "index.php?controller=cart&action=des_session"
+        }
     }
 </script>
-<script>
+<script type="text/javascript" charset="utf-8">
   $(document).ready(function () {
       $('.augment').click(function () {
           event.preventDefault();
@@ -1381,7 +1362,6 @@
                   // Gán lại giá trị đã tăng cho số lượng ban đầu
                   $('.cart-amount').html(amount);
               }
-
           });
       });
       $('.abate').click(function () {
@@ -1397,41 +1377,13 @@
                   var amount = $('.cart-amount').html();
                   //cắt bỏ khoảng trắng 2 đầu
                   amount = amount.trim();
-                  // giảm lên 1
+                  // Tăng lên 1
                   amount--;
                   // Gán lại giá trị đã tăng cho số lượng ban đầu
                   $('.cart-amount').html(amount);
               }
-
           });
       });
-      // $(document).ready(function () {
-      //      //     $('.blocksize').click(function () {
-      //      //         event.preventDefault();
-      //      //         var data = $(this).attr('data-size');
-      //      //         $.ajax({
-      //      //             url: 'index.php?controller=cart&action=augment',
-      //      //             method: 'GET',
-      //      //             data: {
-      //      //                 data: data
-      //      //             },
-      //      //             success: function (data) {
-      //      //                 var amount = $('.cart-amount').html();
-      //      //                 //cắt bỏ khoảng trắng 2 đầu
-      //      //                 amount = amount.trim();
-      //      //                 // Tăng lên 1
-      //      //                 amount++;
-      //      //                 // Gán lại giá trị đã tăng cho số lượng ban đầu
-      //      //                 $('.cart-amount').html(amount);
-      //      //             }
-      //      //
-      //      //         });
-      //      //     });
-      //      // });
-
-
-
-
   });
 </script>
 

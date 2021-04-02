@@ -34,11 +34,11 @@ if (!isset($_SESSION['user'])) {
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="assets/css/_all-skins.min.css">
+    <script src="assets/js/jquery.min.js"></script>
     <!-- Google Font -->
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
 <div class="wrapper">
 
     <header class="main-header">
@@ -144,6 +144,14 @@ if (!isset($_SESSION['user'])) {
             </span>
                     </a>
                 </li>
+                <li>
+                    <a href="index.php?controller=order&action=index">
+                        <i class="fa fa-shopping-cart"></i><span>Quản lý đơn hàng</span>
+                        <span class="pull-right-container">
+              <!--<small class="label pull-right bg-green">new</small>-->
+            </span>
+                    </a>
+                </li>
             </ul>
         </section>
         <!-- /.sidebar -->
@@ -215,7 +223,7 @@ if (!isset($_SESSION['user'])) {
 <!-- ./wrapper -->
 
 <!-- jQuery 3 -->
-<script src="assets/js/jquery.min.js"></script>
+
 <!-- jQuery UI 1.11.4 -->
 <script src="assets/js/jquery-ui.min.js"></script>
 <!-- Bootstrap 3.3.7 -->

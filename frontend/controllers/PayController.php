@@ -1,77 +1,89 @@
 <?php
     require_once 'controllers/Controller.php';
-    require_once 'models/Product.php';
+    require_once 'models/OrderDetail.php';
     require_once 'models/Order.php';
-//    require_once 'libraries/PHPMailer/src/PHPMailer.php';
-//    require_once 'libraries/PHPMailer/src/SMTP.php';
-//    require_once 'libraries/PHPMailer/src/Exception.php';
+    require_once 'models/Product.php';
+
+
 
 
     class PayController extends Controller{
+
         public function index(){
-            $this->content
-                = $this->render('views/pays/index.php' );
+            if (!isset($_SESSION['cart'])) {
+                $_SESSION['error'] = 'Bạn chưa có sản phẩm nào trong giỏ hàng';
+                header("Location: YourCart.html");
+                exit();
+            }
+            $this->content = $this->render('views/pays/index.php' );
             // Gọi layout để hiển thị ra view vừa lấy đc
-//            require_once 'views/layouts/main.php';
+            require_once 'views/layouts/main.php';
+        }
+        public function des_session(){
 
-            echo "<pre>";
-            print_r($_GET);
-//            print_r($_SESSION);
-            echo "</pre>";
-//            if(isset($_POST['submit'])){
-//
-////
-////                $timeString = implode(" "[$_POST['TimeDelivery']]);
-////                var_dump($timeString);
-                $_SESSION['totalmoney'] = $_POST['totalmoney'];
-                $_SESSION['gender']     = $_POST['gender'];
-                $_SESSION['size']    = $_POST['size'];
-                $_SESSION['fullname']   = $_POST['FullName'];
-                $_SESSION['phonenumber'] = $_POST['PhoneNumber'];
-                $_SESSION['email']       = $_POST['Email'];
-                $_SESSION['OrderNote']   = $_POST['OrderNote'];
-                $_SESSION['ship']        = $_POST['ship'];
-                //$_SESSION['BillingAddress'] = $_POST['BillingAddress'];
-                //$_SESSION['province']       = $_POST['province'];
-                $district       = $_POST['district'];
-                $ward           = $_POST['ward'];
-                $TimeDelivery   = $_POST['TimeDelivery'];
-                $_SESSION['addressDetails'] = implode(",", [$_POST['BillingAddress'],$_POST['district'],$_POST['ward'],$_POST['province']]);
-//                $TimeOrder      = $_POST['TimeOrder'];
-//                if(empty($fullname) || empty($BillingAddress) || empty($phonenumber) || empty($district) || empty($ward)){
-//                    $this->error = "Tên, Địa Chỉ, SĐT  ko được để trống";
-//                }
-//                if(empty($this->error)){
-//                    $order_model = new  Order();
-//                    $order_model->fullname = $fullname;
-//                    $order_model->address = implode(" ", [$BillingAddress,$district,$ward,$province]);
-//                    $order_model->email = $email;
-//                    $order_model->mobile = $phonenumber;
-//                    $order_model->note = $OrderNote;
-//                    $order_model->ship = $ship;
-//                    $order_model->price_total = $totalmoney;
-//                    $order_model->EstimatedDeliveryTime = $TimeDelivery;
-//                    $order_model->price_total = $totalmoney;
-////                    $price_total = 0;
-////                    foreach ($_SESSION['cart'] as $cart){
-////                        $price_total += $cart['quantity'] * $cart['price'];
-////                    }
-////                    echo $price_total;
-//                    echo "<pre>";
-//                    print_r($order_model->address);
-//                    echo "</pre>";
-//
-//
-//                    $order_model ->payment_status = 0; // auto cho bằng 0
-//                    $order_id = $order_model->insert();
-//                    if($order_id > 0 ){
-//                    }
-//                }
-//
-//            }
-
-
-
+            session_destroy();
+            header('Location:BigFamily.html');
+            exit();
+        }
+        public function insert(){
+            if (!isset($_SESSION['cart'])) {
+                $_SESSION['error'] = 'Bạn chưa có sản phẩm nào trong giỏ hàng';
+                header("Location: OopError.html");
+                exit();
+            }
+            if(isset($_POST['submit'])){
+//                echo"<pre>";
+//                print_r($_POST);
+//                echo"</pre>";
+                $FullName =$_POST['FullName'];
+                $gender =$_POST['gender'];
+                $PhoneNumber =$_POST['PhoneNumber'];
+                $address = $_POST['address'];
+//                $ship =$_POST['ship'];
+                $Email =$_POST['Email'];
+                $OrderNote =$_POST['OrderNote'];
+                $TimeDelivery =$_POST['TimeDelivery'];
+                $totalmoney =$_POST['totalmoney'];
+                $price_total = 0;
+                foreach ($_SESSION['cart'] as $cart) {
+                    $price_total += $cart['quantity'] * $cart['price'];
+                }
+                if (empty($FullName) || empty($gender) || empty($PhoneNumber) || empty($address) || empty($Email) || empty($OrderNote) || empty($TimeDelivery)|| empty($totalmoney)  ) {
+                    $this->error = 'không được để trống các trường';
+                }elseif (!filter_var($Email, FILTER_VALIDATE_EMAIL)) {
+                    $this->error = 'Email chưa đúng định dạng';
+                }elseif($totalmoney != $price_total){
+                    $this->error =" nghe có vẻ bạn đã can thiệp hệ thống";
+                }
+                if(empty($this->error)){
+                    $order_model = new Order();
+                    $order_model ->fullname = $FullName;
+                    $order_model ->gender = $gender;
+                    $order_model ->mobile = $PhoneNumber;
+                    $order_model ->address = $address;
+//                    echo $address;
+//                    $order_model ->ship = $ship;
+                    $order_model ->email = $Email;
+                    $order_model ->note = $OrderNote;
+//                    $order_model ->ship = $ship;
+                    $order_model ->TimeDelivery = $TimeDelivery;
+                    $order_model ->price_total = $price_total;
+                    // mặc định là chưa thanh toán
+                    $order_model -> payment_status= 0;
+                    // lưu vào bảng orders
+                    $order_id = $order_model->insertOrder();
+//                    var_dump($order_id);
+                    foreach ($_SESSION['cart'] AS $product_id => $cart) {
+                        $order_detail_model = new OrderDetail();
+                        $order_detail_model->order_id = $order_id;
+                        $order_detail_model->product_id = $cart['id'];
+                        $order_detail_model->quantity = $cart['quantity'];
+                        $order_detail_model->select_size = $cart['select_size'];
+                        $order_detail_model->insertOrderDetail($order_id);
+                    }
+                    unset($_SESSION['cart']);
+                }
+            }
         }
     }
 

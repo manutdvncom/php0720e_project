@@ -181,8 +181,8 @@ class CategoryController extends Controller
         header('Location: index.php?controller=category&action=index');
         exit();
     }
-    public function detail()
-    {
+    public function detail(){
+
         if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
             $_SESSION['error'] = 'ID không hợp lệ';
             header('Location: index.php?controller=category&action=index');

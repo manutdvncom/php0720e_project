@@ -24,6 +24,7 @@ class Product extends Model{
     public $str_search;
     public $size_text;
     public $size_id;
+    public $sort;
 
     public function __construct()
     {
@@ -66,9 +67,9 @@ class Product extends Model{
       $sql_select_limit = $this->connection->
       prepare("SELECT products.*, categories.name AS category_name FROM products 
                   INNER JOIN categories ON categories.id = products.category_id
-                --   WHERE categories.name LIKE '%ÁO thể thao%'
-                  ORDER BY products.updated_at DESC, products.created_at DESC
-                  LIMIT 8
+                 WHERE products.status = 1
+                  ORDER BY  products.created_at DESC, products.updated_at DESC
+                  LIMIT 8 
               ");
       $sql_select_limit ->execute();
 
@@ -88,11 +89,6 @@ class Product extends Model{
         return $products;
 
     }
-    
-    
-
-
-
 
     /**
      * Tính tổng số bản ghi đang có trong bảng products
@@ -126,7 +122,7 @@ class Product extends Model{
     public function getProductId($id){
         $sql_select = $this->connection
             ->prepare("SELECT products.*, categories.name FROM products 
-          INNER JOIN categories ON products.category_id = categories.id WHERE products.id = $id");
+          INNER JOIN categories ON products.category_id = categories.id WHERE products.id = $id ");
 
         $sql_select->execute();
         return $sql_select->fetch(PDO::FETCH_ASSOC);
@@ -159,5 +155,42 @@ class Product extends Model{
             ->prepare("DELETE FROM products WHERE id = $id");
         return $sql_delete->execute();
     }
+    public function getCategoryId($id){
+        $sql_select = $this->connection
+            ->prepare("SELECT products.*, categories.name  FROM products 
+          INNER JOIN categories ON products.category_id = categories.id WHERE products.status = 1 AND products.category_id = $id LIMIT 8" );
+        $sql_select->execute();
+        return $sql_select->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function count($id){
+        $sql_select = $this->connection->prepare( "SELECT * FROM products WHERE products.category_id = '$id'");
+        $sql_select->execute();
+
+        $sql_select->fetchAll(PDO::FETCH_ASSOC);
+        return $sql_select->rowCount();
+    }
+    public function load($id,$start,$limit){
+        $sql_select = $this->connection->prepare("SELECT products.*, categories.name  FROM products 
+          INNER JOIN categories ON products.category_id = categories.id WHERE products.category_id = $id  LIMIT $start,$limit");
+        $sql_select->execute();
+        return $sql_select->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function sort($sort,$id){
+        if($sort == 1){
+            $sql_select = $this->connection->prepare("SELECT products.*, categories.name  FROM products 
+          INNER JOIN categories ON products.category_id = categories.id WHERE products.category_id = $id AND products.status = 1 ORDER BY products.created_at DESC ,  products.updated_at DESC");
+        }elseif($sort == 2){
+            $sql_select = $this->connection->prepare("SELECT products.*, categories.name  FROM products 
+          INNER JOIN categories ON products.category_id = categories.id WHERE products.category_id = $id AND products.status = 1 ORDER BY products.price ASC");
+        }else{
+            $sql_select = $this->connection->prepare("SELECT products.*, categories.name  FROM products 
+          INNER JOIN categories ON products.category_id = categories.id WHERE products.category_id = $id AND products.status = 1 ORDER BY products.price DESC");
+        }
+        $sql_select->execute();
+        return $sql_select->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }
 ?>

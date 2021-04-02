@@ -31,7 +31,7 @@
                     <li>Hướng dẫn mua online</li>
                 </ul>
             </div>
-            <div class="footer-col-4">
+            <div class="footer-col-4 follow">
                 <h3>Follow Us</h3>
                 <ul>
                     <li><a href="" class="link__Social">Facebook</a></li>

@@ -69,8 +69,8 @@ class Category extends Model {
         return $obj_select->fetchColumn();
     }
 
-    public function getAllPagination($params = [])
-    {
+    public function getAllPagination($params = []) {
+
         $limit = $params['limit'];
         $page = $params['page'];
         $start = ($page - 1) * $limit;

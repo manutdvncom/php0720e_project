@@ -1,45 +1,35 @@
 <?php
     require_once 'controllers/Controller.php';
+    require_once 'models/Category.php';
     require_once 'models/Product.php';
 
 
 
     class CartController extends Controller{
-        //        public function augment(){
-        ////            echo "<pre>";
-        ////            print_r($_GET);
-        ////            echo "</pre>";
-        ////            foreach ($_SESSION['cart'] as $product_id => $cart):
-        ////                $cart['quantity'] = $_GET['quantity'];
-        ////            endforeach;
-        //            if($_REQUEST["value"]){
-        //                $value = $_REQUEST['value'];
-        //                foreach ($_SESSION['cart'] as $product_id => $cart):
-        //                    $cart['quantity'] = $value;
-        //                endforeach;
-        //                 echo $cart['quantity'];
-        ////                 echo $value;
-        //            }
-        //        }
+
         public function add() {
             $product_id = $_GET['id'];
             // Lấy thông tin sản phẩm dựa theo id
+
             $product_model = new Product();
             $product = $product_model->getProductId($product_id);
 
-            $size_model = new Product();
-            $size = $size_model->getSize($product_id);
+//            $size_model = new Product();
+//            $size = $size_model->getSize($product_id);
             $cart_item = [
                 'id'  =>$product['id'],
                 'name' => $product['title'],
-                'size' => [$size],
                 'price' => $product['price'],
                 'avatar' => $product['avatar'],
-                'select_size'=>$product['select_size'],
+                'select_size' => $_GET['size']  ,
 
                 // Mặc định mỗi lần thêm vào giỏ sẽ tahêm 1 sp
                 'quantity' => 1
             ];
+//            echo "<pre>";
+//            print_r($cart_item);
+//            echo "</pre>";
+
             // Logic thêm vào giỏ hàng
             // + Tạo 1 session để lưu giỏ hàng $_SESSION['cart']
             // + Nếu sp thêm chưa tồn tại trong giỏ hàng ->
@@ -52,9 +42,9 @@
             // + Nếu giỏ hàng chưa hề tồn tại, thì tạo session và
             //thêm sp đầu tiên vào giỏ
             if (!isset($_SESSION['cart'])) {
-              $_SESSION['cart'] = [
-                $product_id => $cart_item
-              ];
+                $_SESSION['cart'] = [
+                    $product_id => $cart_item
+                ];
                 $_SESSION['cart'][$product_id] = $cart_item;
             } else {
                 // Nếu thêm sản phẩm đã tồn tại trong giỏ, thì
@@ -65,8 +55,22 @@
                 // Nếu sp chưa tồn tại thì giống thêm mới
                 else {
                     $_SESSION['cart'][$product_id] = $cart_item;
+
                 }
             }
+//            echo "<pre>";
+//            print_r($_SESSION['cart']);
+//            echo "</pre>";
+        }
+        public function selectsize(){
+            $product_id = $_GET['id'];
+            if(isset($_SESSION['cart'])){
+                if (array_key_exists($product_id, $_SESSION['cart'])) {
+                    $_SESSION['cart'][$product_id]['select_size'] = $_GET['size'];
+                }
+            }
+
+
         }
         public function augment(){
             $product_id = $_GET['data'];
@@ -99,7 +103,17 @@
 //                        $_POST[$product_id];
 //                }
 //            }
-            $this->content = $this->render('views/carts/index.php' );
+//            if (!isset($_SESSION['cart'])) {
+//                $_SESSION['error'] = 'Bạn chưa có sản phẩm nào trong giỏ hàng';
+//                header("Location: YourCart.html");
+//                exit();
+//            }
+            $category_model = new Category();
+            $categories = $category_model->getAll();
+            $this->content = $this->render('views/carts/index.php' ,[
+                'categories' => $categories
+
+            ]);
             require_once 'views/layouts/main.php';
         }
         public function delete() {
@@ -112,12 +126,12 @@
             //    echo "</pre>";
             $id  = $_GET['id'];
             unset($_SESSION['cart'][$id]);
-            header('Location:index.php?controller=cart&action=index');
+            header('Location:YourCart.html');
             exit();
         }
         public function des_session(){
             session_destroy();
-            header('Location:index.php?controller=cart&action=index');
+            header('Location:YourCart.html');
             exit();
         }
     }

@@ -36,15 +36,15 @@ require_once 'helpers/Helper.php';
 <table border="1" cellpadding="8" cellspacing="0" width="100%">
     <tr>
         <th>ID</th>
-        <th>Category name</th>
-        <th>Title</th>
-        <th>Avatar</th>
-        <th>Price</th>
-        <th>Amount</th>
-        <th>Status</th>
-        <th>Created_at</th>
-        <th>Updated_at</th>
-        <th></th>
+        <th>Loại sản phẩm</th>
+        <th>Tên sản phẩm</th>
+        <th>Ảnh minh họa</th>
+        <th>Giá sản phẩm</th>
+        <th>số lượng</th>
+        <th>Trạng thái</th>
+        <th>Ngày khơi tạo</th>
+        <th>Cập nhật ngày</th>
+        <th>Chức Năng</th>
     </tr>
     <?php if (!empty($products)): ?>
         <?php foreach ($products as $product): ?>

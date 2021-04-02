@@ -4,7 +4,9 @@
 #- File rất nhạy cảm, trang có thể die nếu chỉnh sửa
 #- File này ko đúng
 #- Các file mà ko có tên file, mặc định sẽ ẩn trên Window
-#RewriteEngine On
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME}% !-f
+RewriteCond %{REQUEST_FILENAME}% !-d
 # - Khai báo các rule theo dạng sau:
 # RewriteRule <url-thân-thiện> <url-mvc>
 # - Rewrite URl cho trang Giỏ hàng của bạn
@@ -14,6 +16,12 @@
 # chi-tiet-san-pham/7
 # Với tham số động, bắt buộc phải dùng Biểu thức chính
 # quy - Regex
-#RewriteRule BigFamily.html index.php
-#RewriteRule chi-tiet-san-pham/([0-9]{1,}).html index.php?controller=product&action=detail&id=$
-#RewriteRule xoa-san-pham/([0-9]{1,}).html index.php?controller=cart&action=delete&id=$1
+RewriteRule BigFamily.html index.php
+RewriteRule YourCart.html index.php?controller=cart&action=index
+RewriteRule OopError.html index.php?controller=error&action=index
+RewriteRule Pay.html index.php?controller=pay&action=index
+RewriteRule ChiTietSanPham([0-9]+)(.*).html index.php?controller=product&action=detail&id=$1&product=$2
+RewriteRule TheLoai([0-9]+)(.*).html index.php?controller=product&action=product&categoryid=$1&category=$2
+
+#RewriteRule chi-tiet-tin//([0-9]+).html index.php?controller=product&action=detail&id=$1&i=$2
+RewriteRule XoaSanPham([0-9]+)(.*).html  index.php?controller=cart&action=delete&id=$1&&product=$2
